@@ -6,8 +6,8 @@ A simple and lightweight file sistem that supports uploading and downloading of 
 Front end is written in HTML5, CSS3 and JavaScript. Back end is written in ASP.
 
 ## TO-DO
-### front end
-#### HTML and CSS
-#### JavaScript
-### back end
-#### ASP.NET
+### Front end
+- HTML and CSS
+- JavaScript
+### Back end
+- ASP.NET
