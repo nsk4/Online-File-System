@@ -1,0 +1,278 @@
+*
+{
+	/*display:block;*/
+	text-align:center;
+	margin:auto;
+	overflow: auto;
+	
+}
+
+.none
+{
+	all: unset;
+}
+
+#landingPage
+{
+	width : 100%;
+	height: 100%;
+	max-width:100%;
+	max-height:100%;
+	background-image: url("Resources/37818469-cute-panda-pictures.jpg");
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	background-size:cover;
+	
+	height: -moz-calc(100% - 20px); /* Firefox */
+	height: -webkit-calc(100% - 20px); /* Chrome, Safari */
+	height: calc(100% - 20px); /* IE9+ and future browsers */
+}
+/*
+nav {
+    background-color : yellow;
+	height : 50px;
+	width : 100%;
+}
+*/
+main {
+	
+	width : 100%;
+    background-color : brown;
+	
+	
+	
+	max-width:100%;
+    /*max-height:100%;*/
+    vertical-align: middle;
+	
+	height: -moz-calc(100% - 20px); /* Firefox */
+	height: -webkit-calc(100% - 20px); /* Chrome, Safari */
+	height: calc(100% - 20px); /* IE9+ and future browsers */
+	
+}
+
+
+footer {
+    background-color : rgba(0, 255, 0, 0.5);
+	height : 20px;
+	width : 100%;
+
+}
+
+#landingPageTitle
+{
+	margin-top:10px;
+    /*background-color : blue;*/
+	font-size:200%;
+    /*
+	
+	height:50px;
+	*/
+    width:400px;
+	
+	
+}
+
+#landingPageFormSection
+{
+	background-color : rgba(255, 200, 200, 0.8);
+	margin-top:20px;
+	
+    width:500px;
+	padding:10px;
+	/*height:350px;*/
+	border-radius: 25px;
+    border: #73AD21;
+}
+
+#landingPageChangeMode
+{
+    /*background-color : orange;*/
+	width:100%;
+	height: 40px;
+}
+
+#landingPageChangeMode > span
+{
+	border-radius: 25px;
+    border: #73AD21;
+
+	float:left;
+	/*display:inline;*/
+	background-color : rgba(200, 50, 250, 0.7);
+    /*background-color : purple;*/
+	width:50%;
+	height: 100%;
+	display: inline-flex;
+	align-items: center;
+	
+}
+
+.boxSpan
+{
+	/*background-color:red;*/
+	
+	text-align: center;
+	display: inline-block;
+	height: 100%;
+	float:center;
+	align-items: center;
+	vertical-align: middle;
+	width:50%;
+	
+}
+
+#landingPageForm
+{
+	margin-top:20px;
+	/*height: 300px;*/
+	font-size:20px;
+	
+}
+
+#landingPageForm > form > span
+{
+	float:left;
+	/*display:inline;*/
+	/*background-color : yellow;*/
+	width:50%;
+	height: 40px;
+	
+	
+	line-height: 40px;
+	/*display: flex;
+	align-items: center;*/
+}
+
+#landingPageForm > form > span:nth-child(2n-1)
+{
+	text-align:right;
+	margin-left: -5px;
+}
+#landingPageForm > form > span:nth-child(2n)
+{
+	text-align:left;
+	margin-left: 5px;
+	
+}
+input
+{
+	width:100%;
+	height: 40px;
+}
+
+#landingPageChangeLoginFormForgotData
+{
+	color:darkblue;
+	font-size:15px;
+}
+
+.landingPageChangeLoginForm:hover
+{
+	color: darkblue;
+	cursor:pointer;
+}
+.landingPageChangeLoginForm
+{
+	/*color:blue;*/
+}
+
+
+
+.tallNavArea
+{
+	float:left;
+	
+	
+	height: -moz-calc(100% - 45px); /* Firefox */
+	height: -webkit-calc(100% - 45px); /* Chrome, Safari */
+	height: calc(100% - 45px); /* IE9+ and future browsers */
+}
+
+#frontPageTopNav
+{
+	background-color:yellow;
+	width:100%;
+	height:40px;
+	line-height:40px;
+	overflow:hidden;
+	
+}
+
+#frontPageTopNavLeft > article
+{
+	background-color:orange;
+	
+	/*width:50%;*/
+}
+
+#frontPageTopNavRight > article
+{
+	background-color:pink;
+	width:50%;
+	float:left;
+}
+
+#frontPageTopNavLeft
+{
+	float:left;
+	width:60%;
+}
+#frontPageTopNavRight
+{
+	float:left;
+	width:40%;
+	
+}
+
+#frontPageMainArea
+{
+	margin-top:5px;
+}
+#frontPageFolderNav
+{
+	background-color:red;
+	
+	width:200px;
+}
+#frontPageFileNav
+{
+	background-color:green;
+	
+	width:700px;
+}
+#frontPageFileOptions
+{
+	background-color:purple;
+	
+	float:left;
+	width:300px;
+	height:50px;
+}
+#frontPageFileInfo
+{
+	background-color:pink;
+	
+	float:left;
+	width:300px;
+	height:400px;
+}
+#frontPageFilePreview
+{
+	background-color:orange;
+	
+	float:left;
+	width:300px;
+	height:300px;
+}
+
+#frontPageOpenProfileImage
+{
+	width : 40px;
+	height: 40px;
+	/*background-image: url("Resources/avatar.png");*/
+	/*background-repeat: no-repeat;*/
+	vertical-align: middle;
+	
+}
+
