@@ -12,6 +12,11 @@
 	all: unset;
 }
 
+.behaveAsLink
+{
+	cursor:pointer;
+}
+
 #landingPage
 {
 	width : 100%;
@@ -206,11 +211,21 @@ input
 	/*width:50%;*/
 }
 
+#frontPageTopNavLeft > article > a
+{
+	padding-left:10px;
+	
+	/*width:50%;*/
+}
+
 #frontPageTopNavRight > article
 {
+	float:right;
 	background-color:pink;
-	width:50%;
-	float:left;
+	/*width:50%;*/
+	/*float:left;*/
+	padding-left:20px;
+	padding-right:10px;
 }
 
 #frontPageTopNavLeft
@@ -218,9 +233,16 @@ input
 	float:left;
 	width:60%;
 }
+#frontPageTopNavLeft > article
+{
+	padding-left:10px;
+	text-align:left;
+}
+
 #frontPageTopNavRight
 {
-	float:left;
+	float:right;
+	/*float:left;*/
 	width:40%;
 	
 }
@@ -233,7 +255,7 @@ input
 {
 	background-color:red;
 	
-	width:200px;
+	width:300px;
 }
 #frontPageFileNav
 {
@@ -247,7 +269,7 @@ input
 	
 	float:left;
 	width:300px;
-	height:50px;
+	height:480px;
 }
 #frontPageFileInfo
 {
@@ -255,18 +277,26 @@ input
 	
 	float:left;
 	width:300px;
-	height:400px;
+	height:300px;
 }
-#frontPageFilePreview
+
+/* TODO: THIS */
+
+#frontPageFilePreview#showPreviewOn:checked ~ #frontPageFilePreview
 {
 	background-color:orange;
 	
 	float:left;
-	width:300px;
-	height:300px;
+	width:500px;
+	height:500px;
+	
+}
+#frontPageFilePreview#showPreviewOff:checked ~ #frontPageFilePreview
+{
+	display:none;
 }
 
-#frontPageOpenProfileImage
+.frontPageSmallImage
 {
 	width : 40px;
 	height: 40px;
@@ -276,3 +306,146 @@ input
 	
 }
 
+#frontPageLogoImage
+{
+	width : 120px;
+	height: 40px;
+	/*background-image: url("Resources/avatar.png");*/
+	/*background-repeat: no-repeat;*/
+	vertical-align: middle;
+}
+
+.folderElement
+{
+	/*border:solid;*/
+	text-align:left;
+	/*margin-left:-50px;*/
+	padding-left:20px;
+	background-color:purple;
+	
+	line-height:40px;
+	
+	
+	
+}
+
+#frontPageFolderNav > .folderElement
+{
+	
+}
+
+.folderElement > span
+{
+
+}
+
+
+.fileElement
+{
+	/*text-align:left;*/
+	background-color:yellow;
+	/*line-height:40px;
+	padding-left:10px;*/
+}
+
+
+
+
+
+table, td, th {
+    border: 1px solid black;
+	border-collapse: collapse;
+}
+
+
+#fileListTable
+{
+	margin:auto;
+	width:100%;
+	/*border-collapse: collapse;*/
+	line-height:40px;
+}
+
+/*
+#fileListTable > tr > th
+{
+	background-color:yellow;
+	
+}
+#fileListTable > tr > td
+{
+}
+*/
+
+
+#fileListTableFileName
+{
+	/*background-color:yellow;*/
+	width:350px;
+}
+
+#profilePageMain
+{
+	width:500px;
+	padding-top:10px;
+	
+	
+	height: -moz-calc(100% - 70px); /* Firefox */
+	height: -webkit-calc(100% - 70px); /* Chrome, Safari */
+	height: calc(100% - 70px); /* IE9+ and future browsers */
+}
+
+#profilePageMain > article > form > span
+{
+	line-height:40px;
+	display:block;
+	float:left;
+	width:50%;
+}
+#profilePageMain > article > form > span:nth-child(2n-1)
+{
+	text-align:right;
+	margin-left: -5px;
+}
+/*
+.profilePageSubmitButton
+{
+	width:100% !important;
+	padding-left:-10px;
+}
+*/
+
+#profilePageMain > article > form > input
+{
+	/*width:200px;
+	text-align:right;
+	line-height:40px;*/
+	/*text-align:right;
+	margin:auto;
+	overflow: auto;*/
+}
+
+.selectedFolder
+{
+	background-color:red;
+}
+
+.selectedFile
+{
+	background-color:red;
+}
+
+.halfWidth
+{
+	width:49%;
+	
+}
+.quarterWidth
+{
+	width:24%;
+}
+
+select
+{
+	height:40px;
+}
