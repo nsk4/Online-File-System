@@ -24,7 +24,7 @@ class SimpleEcho(WebSocket):
 """ Generates random temperature and humidity and sends it to clients. """
 def randomMeasurementGenerator():
     while True:
-        state = round(random.random()*5)
+        state = round(random.random()*10)
         for client in clients:
             client.sendMessage(u"{\n  \"state\":"+str(state)+u"\n}")
             time.sleep(2)

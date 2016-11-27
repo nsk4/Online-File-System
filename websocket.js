@@ -14,7 +14,24 @@ function initWebSocket(event) {
 
 function dataHandler(event) {
 	serverStatus = JSON.parse(event.data);
-	document.getElementById("serverStatus").value = serverStatus.state;
+	console.log(serverStatus);
+	if(serverStatus.state>8)
+	{
+		document.getElementById("serverStatus").innerHTML = "Strong";
+		document.getElementById("serverStatus").style.color = "green";
+	}
+	else if(serverStatus.state>4)
+	{
+		document.getElementById("serverStatus").innerHTML = "Moderate";
+		document.getElementById("serverStatus").style.color = "orange";
+	}
+	else
+	{
+		document.getElementById("serverStatus").innerHTML = "Weak";
+		document.getElementById("serverStatus").style.color = "red";
+	}
+	
+	//document.getElementById("serverStatus").value = serverStatus.state;
 }
 
 function errorHandler(event) {
