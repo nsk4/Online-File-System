@@ -144,7 +144,7 @@ function showPosition(position) {
 }
 function createQueryLink(position)
 {
-	return "http://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=false";
+	return "https://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=false";
 }
 
 
