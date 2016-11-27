@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Panda File System</title>
+	<link rel="stylesheet" type="text/css" href="css.css" />
+	<meta charset="UTF-8" />
+	<script src="js.js"></script>
+</head>
+<body onload="loadWebpage()" id="landingPageBody">
+
+
+
+<main id="landingPage">
+	<section id="landingPageTitle">
+		<article>
+			<a class="frontTitle" href="index.html"><h1>Panda File System</h1></a>
+		</article>
+	</section>
+	<section id="landingPageFormSection">
+		<article id="landingPageChangeMode">
+			<h2 class="hoverClass" id="loginFormLoginElement" >Login</h2>
+			<h2 class="hoverClass" id="loginFormRegisterElement">Register</h2>
+		</article>
+		
+		<article id="landingPageForm">
+			<article id="forgotLoginForm" class="notShown">
+				<form name="landingPageForgotLoginForm" action="index.html">
+					<span>Enter email:</span>
+					<span><input type="email" name="email" placeholder="Enter email" required /></span>
+					<span></span>
+					<span><input type="submit" name="forgotLogin" value="Recover"/></span>
+				</form>
+			</article>
+			<article id="loginForm" class="notShown">
+				<form name="landingPageLoginForm" action="frontPage.html">
+					<span>Username:</span>
+					<span><input type="text" name="username" placeholder="Enter username" required /></span>
+					<span>Password:</span>
+					<span><input type="password" name="password" placeholder="Enter password" required/></span>
+					<span class="landingPageChangeLoginForm" id="landingPageChangeLoginFormForgotData">Forgot username/password?</span>
+					<span><input type="submit" name="login" value="Login"/></span>
+				</form>
+			</article>
+			<article id="registerForm" class="notShown">
+				<form name="landingPageRegisterForm" action="index.html">
+					<span>Username:</span>
+					<span><input type="text" name="username" placeholder="Enter username" required/></span>
+					<span>Password:</span>
+					<span><input type="password" name="password" placeholder="Enter password" required/></span>
+					<span>Repeat password:</span>
+					<span><input type="password" name="passwordRepeat" placeholder="Repeat password" required/></span>
+					<span>Email:</span>
+					<span><input type="email" name="email" placeholder="Enter email" required/></span>
+					<span>Repeat email:</span>
+					<span><input type="email" name="emailRepeat" placeholder="Repeat email" required/></span>
+					<span></span>
+					<span><input type="submit" name="register" value="Register"/></span>
+				</form>
+			</article>
+		</article>
+	</section>
+</main>
+
+<footer>
+</footer>
+
+</body>
+</html>

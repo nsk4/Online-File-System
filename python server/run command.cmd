@@ -1,0 +1,1 @@
+"C:\Users\Chika\AppData\Local\Programs\Python\Python35-32\python.exe" "D:\fri\3 letnik\sp\website\python server\ws-demo.py"

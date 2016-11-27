@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Panda File System</title>
+	<link rel="stylesheet" type="text/css" href="css.css" />
+	<meta charset="UTF-8" />
+	<script src="js.js"></script>
+	
+</head>
+<body onload="loadWebpage()" id="profilePageBody">
+	<nav id="frontPageTopNav">
+	</nav>
+	<main id="profilePageMain" class="paddingClass" >
+		
+		<article >
+			<h2>Your past logins</h2>
+			<br/>
+			<table id="accessListTable" class="fancyTable">
+			</table>
+		</article>
+		
+		<br />
+		<br />
+		<br/>
+		
+		<article id="profilePageMainForm">
+			<h2>Change account settings</h2>
+			<br/>
+			<input type="button" value="Change email" id="changeAccountSettingsEmailElement" />
+			<br/><br/>
+			<input type="button" value="Change password" id="changeAccountSettingsPasswordElement" />
+			<br/><br/>
+			<input type="button" value="Change location logging settings" id="changeAccountSettingsLocationElement" />
+		</article>
+		
+
+		<br /><br />
+		<a href="frontPage.html" class="noneLink"><h1>Back to main page</h1></a>
+		
+		<br />
+		
+		
+	</main>
+	
+			
+		<section class="popupWindow" id="changeEmailPopup">
+			<article>
+				<h3>Change email</h3>
+				<form name="changeEmailProfile" action="frontPage.html">
+					<input type="email" name="oldEmail" placeholder="Enter old email" required /><br />
+					<input type="email" name="newEmail" placeholder="Enter new email" required /><br />
+					<input type="email" name="newEmailRepeat" placeholder="Repeat new email" required />
+					<input type="submit" name="changeEmail" value="Change email" />
+				</form>
+				<input type="button" value="Close" id="changeAccountSettingsEmailCloseElement" />
+			</article>
+		</section>
+		<section class="popupWindow" id="changePasswordPopup">
+			<article>
+				<h3>Change password</h3>
+				<form name="changePasswordProfile" action="frontPage.html">
+					<input type="password" name="oldPassword" placeholder="Enter old password" required /><br />
+					<input type="password" name="newPassword" placeholder="Enter new password" required /><br />
+					<input type="password" name="newPasswordRepeat" placeholder="Repeat new password" required />
+					<input type="submit" name="changePassword" value="Change password" />
+				</form>
+				<input type="button" value="Close" id="changeAccountSettingsPasswordCloseElement" />
+			</article>
+		</section>
+		<section class="popupWindow" id="changeLocationSettingsPopup">
+			<article>
+				<h3>Change location logging settings</h3>
+				<form name="changeLocationSettingsProfile" action="frontPage.html">
+					<select name="locationSettings" class="fullWidth">
+						<option value="allow">Allow</option>
+						<option value="deny">Deny</option>
+					</select>
+					<input type="submit" name="changeLocationSettings" value="Change location settings" />
+				</form>
+				<input type="button" value="Close" id="changeAccountSettingsLocationCloseElement" />
+			</article>
+		</section>
+
+		
+		
+	<footer>
+	</footer>
+</body>
+</html>
