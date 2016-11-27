@@ -6,6 +6,7 @@ A simple and lightweight file sistem that supports uploading and downloading of 
 Front end is written in HTML5, CSS3 and JavaScript. Back end is written in ASP.
 
 For more information see docs/README.md
+Note: Application requires a websocket server to run at 127.0.0.1:1234
 
 ## TO-DO
 ### Front end
