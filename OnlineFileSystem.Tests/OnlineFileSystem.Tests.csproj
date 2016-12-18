@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3EF5594D-855B-4BBF-9834-A6128BACAD86}</ProjectGuid>
+    <ProjectGuid>{131EA97A-FDBB-48BC-8D34-C89EDEF5ED66}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OnlineFileSystem.Tests</RootNamespace>
@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OnlineFileSystem\OnlineFileSystem.csproj">
-      <Project>{CB78ECC2-72E9-4806-A63E-59B8E618436A}</Project>
+      <Project>{5E8D7DCF-37CF-42E2-B271-DFE2A1B61194}</Project>
       <Name>OnlineFileSystem</Name>
     </ProjectReference>
   </ItemGroup>

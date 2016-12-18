@@ -1,0 +1,9 @@
+﻿
+// Adds initial file
+enable-migrations
+
+// Updates initial file
+add-migration Initial
+
+// Regenerates/Deletes Configuration file - DO NOT USE!!!
+enable-migrations -Force
