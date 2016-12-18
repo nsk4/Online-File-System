@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -29,8 +30,13 @@ namespace OnlineFileSystem.Models
         [DataType(DataType.DateTime)]
         public DateTime DateModified { get; set; }
 
-        public Folder[] Folders { get; set; }
+        
+        public Folder ParentFolder { get; set; }
 
-        public File[] Files { get; set; }
+        [Required]
+        public UserAccount OwnerUserAccount { get; set; }
+
+        //public virtual ICollection<File> Files { get; set; }
+        //public virtual ICollection<Folder> Folders { get; set; }
     }
 }

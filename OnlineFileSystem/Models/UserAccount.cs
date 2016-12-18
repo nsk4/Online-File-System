@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,6 +15,7 @@ namespace OnlineFileSystem.Models
         }
 
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserAccountId { get; set; }
 
         [Required]
@@ -41,7 +43,5 @@ namespace OnlineFileSystem.Models
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime LastLogin { get; set; }
-
-        public Folder[] Folders { get; set; }
     }
 }

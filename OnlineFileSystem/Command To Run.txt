@@ -7,3 +7,8 @@ add-migration Initial
 
 // Regenerates/Deletes Configuration file - DO NOT USE!!!
 enable-migrations -Force
+
+
+
+// Updates the database with migration files
+update-database

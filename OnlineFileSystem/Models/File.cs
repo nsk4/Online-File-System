@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,7 @@ namespace OnlineFileSystem.Models
 
 
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FileId { get; set; }
 
         [Required]
@@ -41,7 +43,9 @@ namespace OnlineFileSystem.Models
         public DateTime DateModified { get; set; }
 
         [Required]
-        [DataType(DataType.Custom)]
-        public byte[] Content { get; set; }
+        public FileContent Content { get; set; }
+
+        [Required]
+        public Folder ParentFolder { get; set; }
     }
 }
