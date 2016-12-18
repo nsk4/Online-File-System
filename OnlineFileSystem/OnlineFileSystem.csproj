@@ -201,14 +201,14 @@
     <Compile Include="Controllers\FoldersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserAccountsController.cs" />
     <Compile Include="Controllers\UserRolesController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612180349581_Initial.cs" />
-    <Compile Include="Migrations\201612180349581_Initial.Designer.cs">
-      <DependentUpon>201612180349581_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201612180617475_Initial.cs" />
+    <Compile Include="Migrations\201612180617475_Initial.Designer.cs">
+      <DependentUpon>201612180617475_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -216,7 +216,7 @@
     <Compile Include="Models\Folder.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -321,11 +321,6 @@
     <Content Include="Views\Files\Details.cshtml" />
     <Content Include="Views\Files\Edit.cshtml" />
     <Content Include="Views\Files\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Folders\Create.cshtml" />
     <Content Include="Views\Folders\Delete.cshtml" />
     <Content Include="Views\Folders\Details.cshtml" />
@@ -336,6 +331,11 @@
     <Content Include="Views\UserRoles\Details.cshtml" />
     <Content Include="Views\UserRoles\Edit.cshtml" />
     <Content Include="Views\UserRoles\Index.cshtml" />
+    <Content Include="Views\UserAccounts\Create.cshtml" />
+    <Content Include="Views\UserAccounts\Delete.cshtml" />
+    <Content Include="Views\UserAccounts\Details.cshtml" />
+    <Content Include="Views\UserAccounts\Edit.cshtml" />
+    <Content Include="Views\UserAccounts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -352,8 +352,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612180349581_Initial.resx">
-      <DependentUpon>201612180349581_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612180617475_Initial.resx">
+      <DependentUpon>201612180617475_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

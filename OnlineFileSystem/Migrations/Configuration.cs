@@ -1,13 +1,14 @@
-using Microsoft.Ajax.Utilities;
-using OnlineFileSystem.Controllers;
+
+
+using System.Collections.Generic;
 
 namespace OnlineFileSystem.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using OnlineFileSystem.Models;
     using System.Linq;
-    using Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<OnlineFileSystem.Models.ApplicationDbContext>
     {
@@ -32,6 +33,7 @@ namespace OnlineFileSystem.Migrations
             //
 
 
+            /*
             // Init of user roles
             context.UserRoles.AddOrUpdate(p => p.UserRoleId,
                 new UserRole
@@ -47,8 +49,7 @@ namespace OnlineFileSystem.Migrations
                     Role = "Unconfirmed"
                 }
             );
-
-
+            
             // init of sample files
             context.Files.AddOrUpdate(p => p.FileId,
                 new File
@@ -60,7 +61,7 @@ namespace OnlineFileSystem.Migrations
                     Size = 3000,
                     DateCreated = new DateTime(2016, 12, 10),
                     DateModified = new DateTime(2016, 12, 10),
-                    Content = new byte[] { 0x0,0x22,0x9,0x1 }
+                    Content = new byte[] { 0x0, 0x22, 0x9, 0x1 }
                 },
                 new File
                 {
@@ -111,19 +112,19 @@ namespace OnlineFileSystem.Migrations
             );
 
             // init of users
-            context.Users.AddOrUpdate(p => p.UserId,
-                new User
+            context.UserAccounts.AddOrUpdate(p => p.UserAccountId,
+                new UserAccount
                 {
                     Username = "TestUser1",
                     Password = "test",
                     Email = "nejcsk@hotmail.com",
-                    Role = context.UserRoles.Single(s=>s.Role=="User"),
+                    Role = context.UserRoles.Single(s => s.Role == "User"),
                     DateCreated = new DateTime(2014, 10, 20),
                     DateModified = new DateTime(2014, 10, 20),
                     LastLogin = new DateTime(2015, 11, 21),
                     Folders = (from folders in context.Folders where folders.Name == "folder1" select folders).ToArray(),
                 },
-                new User
+                new UserAccount
                 {
                     Username = "TestUser2",
                     Password = "test",
@@ -135,6 +136,7 @@ namespace OnlineFileSystem.Migrations
                     Folders = (from folders in context.Folders where folders.Name == "folder2" select folders).ToArray(),
                 }
             );
+            */
         }
     }
 }

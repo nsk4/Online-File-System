@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineFileSystem.Models.User>
+﻿@model IEnumerable<OnlineFileSystem.Models.UserAccount>
 
 @{
     ViewBag.Title = "Index";
@@ -53,9 +53,9 @@
             @Html.DisplayFor(modelItem => item.LastLogin)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserAccountId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserAccountId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserAccountId })
         </td>
     </tr>
 }

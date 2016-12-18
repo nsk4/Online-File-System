@@ -13,7 +13,7 @@ namespace OnlineFileSystem.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201612180349581_Initial"; }
+            get { return "201612180617475_Initial"; }
         }
         
         string IMigrationMetadata.Source

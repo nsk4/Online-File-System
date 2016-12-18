@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace OnlineFileSystem.Models
 {
     public class Folder
     {
+        public Folder()
+        {
+
+        }
+
         [Required]
         public int FolderId { get; set; }
 

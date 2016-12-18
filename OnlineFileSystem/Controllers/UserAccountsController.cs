@@ -10,107 +10,107 @@ using OnlineFileSystem.Models;
 
 namespace OnlineFileSystem.Controllers
 {
-    public class UsersController : Controller
+    public class UserAccountsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Users
+        // GET: UserAccounts
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(db.UserAccounts.ToList());
         }
 
-        // GET: Users/Details/5
+        // GET: UserAccounts/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            UserAccount userAccount = db.UserAccounts.Find(id);
+            if (userAccount == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(userAccount);
         }
 
-        // GET: Users/Create
+        // GET: UserAccounts/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: UserAccounts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,Username,Password,Email,DateCreated,DateModified,LastLogin")] User user)
+        public ActionResult Create([Bind(Include = "UserAccountId,Username,Password,Email,DateCreated,DateModified,LastLogin")] UserAccount userAccount)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
+                db.UserAccounts.Add(userAccount);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(user);
+            return View(userAccount);
         }
 
-        // GET: Users/Edit/5
+        // GET: UserAccounts/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            UserAccount userAccount = db.UserAccounts.Find(id);
+            if (userAccount == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(userAccount);
         }
 
-        // POST: Users/Edit/5
+        // POST: UserAccounts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,Username,Password,Email,DateCreated,DateModified,LastLogin")] User user)
+        public ActionResult Edit([Bind(Include = "UserAccountId,Username,Password,Email,DateCreated,DateModified,LastLogin")] UserAccount userAccount)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
+                db.Entry(userAccount).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(user);
+            return View(userAccount);
         }
 
-        // GET: Users/Delete/5
+        // GET: UserAccounts/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            UserAccount userAccount = db.UserAccounts.Find(id);
+            if (userAccount == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(userAccount);
         }
 
-        // POST: Users/Delete/5
+        // POST: UserAccounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
+            UserAccount userAccount = db.UserAccounts.Find(id);
+            db.UserAccounts.Remove(userAccount);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

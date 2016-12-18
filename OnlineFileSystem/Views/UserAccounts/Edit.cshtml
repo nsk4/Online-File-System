@@ -1,4 +1,4 @@
-﻿@model OnlineFileSystem.Models.User
+﻿@model OnlineFileSystem.Models.UserAccount
 
 @{
     ViewBag.Title = "Edit";
@@ -12,10 +12,10 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>User</h4>
+        <h4>UserAccount</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.UserAccountId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })

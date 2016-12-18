@@ -6,10 +6,15 @@ using System.Web;
 
 namespace OnlineFileSystem.Models
 {
-    public class User
+    public class UserAccount
     {
+        public UserAccount()
+        {
+
+        }
+
         [Required]
-        public int UserId { get; set; }
+        public int UserAccountId { get; set; }
 
         [Required]
         public string Username { get; set; }
@@ -38,7 +43,5 @@ namespace OnlineFileSystem.Models
         public DateTime LastLogin { get; set; }
 
         public Folder[] Folders { get; set; }
-
-
     }
 }
