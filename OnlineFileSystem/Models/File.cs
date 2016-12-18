@@ -11,7 +11,7 @@ namespace OnlineFileSystem.Models
     {
         public File()
         {
-            
+
         }
 
 
@@ -41,6 +41,7 @@ namespace OnlineFileSystem.Models
         public DateTime DateModified { get; set; }
 
         [Required]
+        [DataType(DataType.Custom)]
         public byte[] Content { get; set; }
     }
 }

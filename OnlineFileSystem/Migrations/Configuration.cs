@@ -1,13 +1,10 @@
-
-
-using System.Collections.Generic;
+using OnlineFileSystem.Models;
 
 namespace OnlineFileSystem.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using OnlineFileSystem.Models;
     using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<OnlineFileSystem.Models.ApplicationDbContext>
@@ -49,7 +46,9 @@ namespace OnlineFileSystem.Migrations
                     Role = "Unconfirmed"
                 }
             );
-            
+            */
+
+
             // init of sample files
             context.Files.AddOrUpdate(p => p.FileId,
                 new File
@@ -61,8 +60,8 @@ namespace OnlineFileSystem.Migrations
                     Size = 3000,
                     DateCreated = new DateTime(2016, 12, 10),
                     DateModified = new DateTime(2016, 12, 10),
-                    Content = new byte[] { 0x0, 0x22, 0x9, 0x1 }
-                },
+                    Content = new byte[] { 1, 2, 3, 4 }
+                }/*,
                 new File
                 {
                     Name = "test2.jpg",
@@ -71,7 +70,7 @@ namespace OnlineFileSystem.Migrations
                     Size = 552384000,
                     DateCreated = new DateTime(2016, 12, 10),
                     DateModified = new DateTime(2016, 12, 11),
-                    Content = new byte[] { 0x1, 0x1, 0x2, 0xFF }
+                    Content = new byte[] { 8, 4, 5, 5 }
                 },
                 new File
                 {
@@ -82,10 +81,11 @@ namespace OnlineFileSystem.Migrations
                     Size = 552384000,
                     DateCreated = new DateTime(2016, 12, 9),
                     DateModified = new DateTime(2016, 12, 10),
-                    Content = new byte[] { 0x10, 0xA, 0x9, 0x2 }
+                    Content = new byte[] { 3, 4, 9, 1 }
                 }
+                */
             );
-
+            /*
             // init of folders
             context.Folders.AddOrUpdate(p => p.FolderId,
                 new Folder
