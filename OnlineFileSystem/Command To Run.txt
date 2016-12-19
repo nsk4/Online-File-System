@@ -1,4 +1,6 @@
-﻿
+﻿https://www.codeproject.com/articles/897559/learn-mvc-in-days-day
+
+
 // Adds initial file
 enable-migrations
 
