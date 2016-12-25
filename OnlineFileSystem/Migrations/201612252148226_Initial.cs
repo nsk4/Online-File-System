@@ -61,6 +61,7 @@ namespace OnlineFileSystem.Migrations
                         UserAccountId = c.Int(nullable: false, identity: true),
                         Username = c.String(nullable: false),
                         Password = c.String(nullable: false),
+                        PasswordSalt = c.String(nullable: false),
                         Email = c.String(nullable: false),
                         DateCreated = c.DateTime(nullable: false),
                         DateModified = c.DateTime(nullable: false),

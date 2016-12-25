@@ -26,6 +26,10 @@ namespace OnlineFileSystem.Models
         public string Password { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
+        public string PasswordSalt { get; set; }
+
+        [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 

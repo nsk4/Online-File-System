@@ -54,6 +54,7 @@ namespace OnlineFileSystem.Migrations
             UserAccount user1 = new UserAccount();
             user1.Username = "TestUser1";
             user1.Password = "test";
+            user1.PasswordSalt = "nippon";
             user1.Email = "nejcsk@hotmail.com";
             user1.Role = roleUser;
             user1.DateCreated = new DateTime(2014, 10, 20);
@@ -63,6 +64,7 @@ namespace OnlineFileSystem.Migrations
             UserAccount user2 = new UserAccount();
             user2.Username = "TestUser2";
             user2.Password = "test";
+            user2.PasswordSalt = "nippon";
             user2.Email = "s.k.nejc@gmail.com";
             user2.Role = roleUnconfirmed;
             user2.DateCreated = new DateTime(2015, 10, 20);

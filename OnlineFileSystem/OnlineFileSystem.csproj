@@ -196,29 +196,26 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\FileContentsController.cs" />
-    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\FoldersController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\Old\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Old\ManageController.cs" />
     <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\UserAccountsController.cs" />
-    <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612181958468_Initial.cs" />
-    <Compile Include="Migrations\201612181958468_Initial.Designer.cs">
-      <DependentUpon>201612181958468_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201612252148226_Initial.cs" />
+    <Compile Include="Migrations\201612252148226_Initial.Designer.cs">
+      <DependentUpon>201612252148226_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Old\AccountViewModels.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FileContent.cs" />
     <Compile Include="Models\Folder.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Old\ManageViewModels.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -302,58 +299,34 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Old\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Old\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Old\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Old\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Old\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Old\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Old\Account\Login.cshtml" />
+    <Content Include="Views\Old\Account\Register.cshtml" />
+    <Content Include="Views\Old\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Old\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Old\Account\SendCode.cshtml" />
+    <Content Include="Views\Old\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Old\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Old\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Old\Manage\Index.cshtml" />
+    <Content Include="Views\Old\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Old\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Old\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
-    <Content Include="Views\Files\Create.cshtml" />
-    <Content Include="Views\Files\Delete.cshtml" />
-    <Content Include="Views\Files\Details.cshtml" />
-    <Content Include="Views\Files\Edit.cshtml" />
-    <Content Include="Views\Files\Index.cshtml" />
-    <Content Include="Views\FileContents\Create.cshtml" />
-    <Content Include="Views\FileContents\Delete.cshtml" />
-    <Content Include="Views\FileContents\Details.cshtml" />
-    <Content Include="Views\FileContents\Edit.cshtml" />
-    <Content Include="Views\FileContents\Index.cshtml" />
+    <Content Include="Views\Test\MyView.cshtml" />
+    <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\Folders\Create.cshtml" />
     <Content Include="Views\Folders\Delete.cshtml" />
     <Content Include="Views\Folders\Details.cshtml" />
     <Content Include="Views\Folders\Edit.cshtml" />
     <Content Include="Views\Folders\Index.cshtml" />
-    <Content Include="Views\UserRoles\Create.cshtml" />
-    <Content Include="Views\UserRoles\Delete.cshtml" />
-    <Content Include="Views\UserRoles\Details.cshtml" />
-    <Content Include="Views\UserRoles\Edit.cshtml" />
-    <Content Include="Views\UserRoles\Index.cshtml" />
-    <Content Include="Views\UserAccounts\Create.cshtml" />
-    <Content Include="Views\UserAccounts\Delete.cshtml" />
-    <Content Include="Views\UserAccounts\Details.cshtml" />
-    <Content Include="Views\UserAccounts\Edit.cshtml" />
-    <Content Include="Views\UserAccounts\Index.cshtml" />
-    <Content Include="Views\Test\MyView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612181958468_Initial.resx">
-      <DependentUpon>201612181958468_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -366,7 +339,11 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612252148226_Initial.resx">
+      <DependentUpon>201612252148226_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -14,3 +14,26 @@ enable-migrations -Force
 
 // Updates the database with migration files
 update-database
+
+
+
+SELECT * FROM information_schema.tables
+
+SELECT  'DROP TABLE [' + name + '];'
+FROM    sys.tables
+
+DROP TABLE [Files];
+DROP TABLE [Folders];
+DROP TABLE [UserAccounts];
+DROP TABLE [UserRoles];
+DROP TABLE [AspNetUserRoles];
+DROP TABLE [AspNetUserClaims];
+DROP TABLE [AspNetUserLogins];
+DROP TABLE [__MigrationHistory];
+DROP TABLE [AspNetRoles];
+DROP TABLE [AspNetUsers];
+DROP TABLE [FileContents];
+
+
+
+http://www.layoutit.com/build#

@@ -14,7 +14,12 @@ namespace OnlineFileSystem.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Folders
+        public List<Folder> getFolderList()
+        {
+            return null;
+        }
+
+    // GET: Folders
         public ActionResult Index()
         {
             return View(db.Folders.ToList());
