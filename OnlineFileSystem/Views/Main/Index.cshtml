@@ -2,113 +2,136 @@
 @using OnlineFileSystem.Models
 @{
     //ViewBag.Title = "11111";
-    List<Folder> folderList = (List<Folder>)ViewBag.TmpList;
-}
-<h2>@ViewBag.Title</h2>
-<h3>@ViewBag.Message</h3>
+    List<Folder> folderList = (List<Folder>)ViewBag.folderList;
+    List<OnlineFileSystem.Models.File> fileList = (List<OnlineFileSystem.Models.File>)ViewBag.fileList;
+    string userId = ViewBag.userId;
 
-aaaa
+    Folder currentFolder = null;
+    if (ViewBag.currentFolder != null)
+    {
+        currentFolder = ViewBag.currentFolder;
+    }
+
+}
+
 <p>Use this area to provide additional information.</p>
 
-@foreach (var item in folderList)
-{
-    <div>@item.Name</div>
-}
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-sm-4">
+            <div class="h3">
+                @if (currentFolder != null)
+                {
+                    
+                    @Html.ActionLink("Up", "OpenFolder", "Main", new { userId = userId, folderId = currentFolder.ParentFolder }, new { @class = "btn btn-default", @type = "button" })
+                    @currentFolder.Name
+
+                }
+                else
+                {
+                    @Html.ActionLink("Up", "", "", null, new { @class = "btn btn-default disabled", @type = "button" })
+                    @Html.Raw("Root")
+                }
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+            <div class="pull-right btn-group">
+                <button class="btn btn-default" type="button">
+                    Upload file
+                </button>
+                <button class="btn btn-default" type="button">
+                    New folder
+                </button>
+                <button class="btn btn-default" type="button">
+                    Rename folder
+                </button>
+                <button class="btn btn-default" type="button">
+                    Delete folder
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+
         <div class="col-md-12">
-            <h3 class="text-center">
-                h3. Lorem ipsum dolor sit amet.
-            </h3>
+
             <table class="table table-hover table-bordered">
                 <thead>
-                    <tr>
-                        <th>
-                            #
-                        </th>
-                        <th>
-                            Product
-                        </th>
-                        <th>
-                            Payment Taken
-                        </th>
-                        <th>
-                            Status
-                        </th>
-                    </tr>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        File Name
+                    </th>
+                    <th>
+                        Date Created
+                    </th>
+                    <th>
+                        Date Modified
+                    </th>
+                    <th>
+                        Sharing
+                    </th>
+                    <th>
+                        File Size
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
+                @foreach (var item in folderList)
+                {
                     <tr>
                         <td>
-                            1
+                            <img src="@Url.Content("~/Content/Images/FolderIcon.png")" class="smallRowImage"/>
                         </td>
                         <td>
-                            TB - Monthly
+                            @Html.ActionLink(item.Name, "OpenFolder", "Main", new {userId = userId, folderId = item.FolderId}, null)
                         </td>
                         <td>
-                            01/04/2012
+                            @item.DateCreated
                         </td>
                         <td>
-                            Default
+                            @item.DateModified
+                        </td>
+                        <td>
+                            /
+                        </td>
+                        <td>
+                            /
                         </td>
                     </tr>
-                    <tr class="active">
+                }
+                @foreach (var item in fileList)
+                {
+                    <tr>
                         <td>
-                            1
+                            <img src="@Url.Content("~/Content/Images/FileIcon.png")" class="smallRowImage"/>
                         </td>
                         <td>
-                            TB - Monthly
+                            @item.Name
                         </td>
                         <td>
-                            01/04/2012
+                            @item.DateCreated
                         </td>
                         <td>
-                            Approved
-                        </td>
-                    </tr>
-                    <tr class="success">
-                        <td>
-                            2
+                            @item.DateModified
                         </td>
                         <td>
-                            TB - Monthly
+                            @item.Sharing
                         </td>
                         <td>
-                            02/04/2012
-                        </td>
-                        <td>
-                            Declined
+                            @item.Size
                         </td>
                     </tr>
-                    <tr class="warning">
-                        <td>
-                            3
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            03/04/2012
-                        </td>
-                        <td>
-                            Pending
-                        </td>
-                    </tr>
-                    <tr class="danger">
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            04/04/2012
-                        </td>
-                        <td>
-                            Call in to confirm
-                        </td>
-                    </tr>
+                }
+
+
                 </tbody>
             </table>
         </div>

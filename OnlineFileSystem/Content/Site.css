@@ -22,3 +22,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.smallRowImage {
+  height: 20px;
+  
+  display: block;
+  margin: 0 auto;
+}
