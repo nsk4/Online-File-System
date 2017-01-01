@@ -4,7 +4,7 @@
     //ViewBag.Title = "11111";
     List<Folder> folderList = (List<Folder>)ViewBag.folderList;
     List<OnlineFileSystem.Models.File> fileList = (List<OnlineFileSystem.Models.File>)ViewBag.fileList;
-    string userId = ViewBag.userId;
+    int? userId = ViewBag.userId;
 
     Folder currentFolder = null;
     if (ViewBag.currentFolder != null)
@@ -14,23 +14,25 @@
 
 }
 
-<p>Use this area to provide additional information.</p>
-
-
+<p></p>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-4">
             <div class="h3">
-                @if (currentFolder != null)
+                @if (currentFolder != null && currentFolder.ParentFolder != null) // folder has parent
                 {
-                    
-                    @Html.ActionLink("Up", "OpenFolder", "Main", new { userId = userId, folderId = currentFolder.ParentFolder }, new { @class = "btn btn-default", @type = "button" })
+                    @Html.ActionLink("Up", "OpenFolder", "Main", new { userId = userId, folderId = currentFolder.ParentFolder.FolderId }, new { @class = "btn btn-default", @type = "button" })
                     @currentFolder.Name
-
+                    
                 }
-                else
+                else if(currentFolder != null && currentFolder.ParentFolder == null) // parent is root
                 {
-                    @Html.ActionLink("Up", "", "", null, new { @class = "btn btn-default disabled", @type = "button" })
+                    @Html.ActionLink("Up", "OpenFolder", "Main", new {userId = userId}, new {@class = "btn btn-default", @type = "button"})
+                    @currentFolder.Name
+                }
+                else // root folder
+                {
+                    @Html.ActionLink("Up", "", "", null, new {@class = "btn btn-default disabled", @type = "button"})
                     @Html.Raw("Root")
                 }
             </div>
@@ -38,108 +40,196 @@
 
         <div class="col-sm-8">
             <div class="pull-right btn-group">
-                <button class="btn btn-default" type="button">
+                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#uploadFilePopup">
                     Upload file
                 </button>
-                <button class="btn btn-default" type="button">
+                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#newFolderPopup">
                     New folder
                 </button>
-                <button class="btn btn-default" type="button">
+                <button class="btn btn-default 
+                        @if (currentFolder == null) { @Html.Raw("disabled") } 
+                        " type="button" data-toggle="modal" data-target="#renameFolderPopup">
                     Rename folder
                 </button>
-                <button class="btn btn-default" type="button">
+                <button class="btn btn-default
+                        @if (currentFolder == null) { @Html.Raw("disabled") } 
+                        " type="button" data-toggle="modal" data-target="#deleteFolderPopup">
                     Delete folder
                 </button>
             </div>
         </div>
     </div>
 
-
-
     <div class="row">
-
         <div class="col-md-12">
-
             <table class="table table-hover table-bordered">
                 <thead>
                 <tr>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        File Name
-                    </th>
-                    <th>
-                        Date Created
-                    </th>
-                    <th>
-                        Date Modified
-                    </th>
-                    <th>
-                        Sharing
-                    </th>
-                    <th>
-                        File Size
-                    </th>
+                    <th class="text-center">#</th>
+                    <th>File Name</th>
+                    <th>Date Created</th>
+                    <th>Date Modified</th>
+                    <th>File Type</th>
+                    <th>Sharing</th>
+                    <th>File Size</th>
+                    <th>Options</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach (var item in folderList)
                 {
                     <tr>
-                        <td>
-                            <img src="@Url.Content("~/Content/Images/FolderIcon.png")" class="smallRowImage"/>
-                        </td>
-                        <td>
-                            @Html.ActionLink(item.Name, "OpenFolder", "Main", new {userId = userId, folderId = item.FolderId}, null)
-                        </td>
-                        <td>
-                            @item.DateCreated
-                        </td>
-                        <td>
-                            @item.DateModified
-                        </td>
-                        <td>
-                            /
-                        </td>
-                        <td>
-                            /
-                        </td>
+                        <td><img src="@Url.Content("~/Content/Images/FolderIcon.png")" title="Folder" class="smallRowImage"/></td>
+                        <td>@Html.ActionLink(item.Name, "OpenFolder", "Main", new {userId = userId, folderId = item.FolderId}, null)</td>
+                        <td>@item.DateCreated</td>
+                        <td>@item.DateModified</td>
+                        <td>/</td>
+                        <td>/</td>
+                        <td>/</td>
+                        <td></td>
                     </tr>
                 }
                 @foreach (var item in fileList)
                 {
                     <tr>
+                        <td><img src="@Url.Content("~/Content/Images/FileIcon.png")" title="File" class="smallRowImage"/></td>
+                        <td>@item.Name</td>
+                        <td>@item.DateCreated</td>
+                        <td>@item.DateModified</td>
+                        <td>@item.FileType</td>
+                        <td>@Html.Raw(@item.Sharing == 1 ? "yes" : "no")</td>
+                        <td>@item.Size</td>
                         <td>
-                            <img src="@Url.Content("~/Content/Images/FileIcon.png")" class="smallRowImage"/>
-                        </td>
-                        <td>
-                            @item.Name
-                        </td>
-                        <td>
-                            @item.DateCreated
-                        </td>
-                        <td>
-                            @item.DateModified
-                        </td>
-                        <td>
-                            @item.Sharing
-                        </td>
-                        <td>
-                            @item.Size
+                            <ul class="list-inline list-unstyled">
+                                <li>
+                                    <a href="@Url.Action("DownloadFile", "Main", new { userId = userId, currentFolderId = currentFolder?.FolderId, fileId = item.FileId })">
+                                        <img src="@Url.Content("~/Content/Images/DownloadIcon.png")" title="Download" class="smallRowImage" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("DeleteFile", "Main", new { userId = userId, fileId = item.FileId })">
+                                        <img src="@Url.Content("~/Content/Images/DeleteIcon.png")" title="Delete" class="smallRowImage" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("ShareFile", "Main", new { userId = userId, currentFolderId = currentFolder?.FolderId, fileId = item.FileId })">
+                                        <img src="@Url.Content("~/Content/Images/ShareIcon.png")" title="Share" class="smallRowImage" />
+                                    </a>
+                                </li>
+                            </ul>
+                            
+                            
+                            
                         </td>
                     </tr>
                 }
-
-
                 </tbody>
             </table>
         </div>
     </div>
+    
+    
+    
+
     <div class="row">
-        <div class="col-md-4">
+        placeholder
+    </div>
+    
+    
+
+</div>
+
+
+<!-- New Folder -->
+<div class="modal fade" id="newFolderPopup" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                @using (Html.BeginForm("CreateFolder", "Main", FormMethod.Post, new { @class= "form-inline", @role= "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <!--<label for="newFolderName">Folder name</label>-->
+                        <input type="text" class="form-control" id="newFolderName" name="newFolderName" placeholder="Enter folder name" />
+                    </div>
+                    <input type="hidden" name="userId" value="@userId" />
+                    <input type="hidden" name="currentFolderId" value="@if (currentFolder == null) { @Html.Raw("") } else { @currentFolder.FolderId  }" />
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                }
+            </div>
         </div>
-        <div class="col-md-8">
+    </div>
+</div>
+
+
+<!-- Rename Folder -->
+<div class="modal fade" id="renameFolderPopup" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                @using (Html.BeginForm("RenameFolder", "Main", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <!--<label for="newFolderName">Folder name</label>-->
+                        <input type="text" class="form-control" id="newFolderName" name="newFolderName" placeholder="Enter folder name" />
+                    </div>
+                    <input type="hidden" name="userId" value="@userId" />
+                    <input type="hidden" name="currentFolderId" value="@if (currentFolder == null) { @Html.Raw("")  } else { @currentFolder.FolderId }" />
+                    <button type="submit" class="btn btn-primary">Rename</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete Folder -->
+<div class="modal fade" id="deleteFolderPopup" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                @using (Html.BeginForm("DeleteFolder", "Main", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="confirmFolderDelete">Really delete folder and all its files?</label>
+                        <input type="checkbox"  id="confirmFolderDelete" name="confirmFolderDelete" value="true" />
+                    </div>
+                    <input type="hidden" name="userId" value="@userId" />
+                    <input type="hidden" name="currentFolderId" value="@if (currentFolder == null) { @Html.Raw("") } else { @currentFolder.FolderId }" />
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Upload File -->
+<div class="modal fade" id="uploadFilePopup" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                @using (Html.BeginForm("UploadFile", "Main", FormMethod.Post, new { @class = "form-inline", @role = "form", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="newFileName" name="newFileName" placeholder="Enter file name" />
+                        <input type="file" id="file" name="file" />
+
+                    </div>
+                    <input type="hidden" name="userId" value="@userId" />
+                    <input type="hidden" name="currentFolderId" value="@if (currentFolder == null) { @Html.Raw("") } else { @currentFolder.FolderId }" />
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                }
+            </div>
         </div>
     </div>
 </div>

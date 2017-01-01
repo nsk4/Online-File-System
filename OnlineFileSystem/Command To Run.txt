@@ -1,26 +1,37 @@
 ﻿https://www.codeproject.com/articles/897559/learn-mvc-in-days-day
 
+https://jsfiddle.net/KyleMit/0fscmf3L/
+http://www.layoutit.com/build
 
-// Adds initial file
-enable-migrations
+http://www.iconsdb.com/gray-icons/?search=share
 
-// Updates initial file
+
+TODO:
+registration
+login
+account options
+
+file share
+file rename
+group delete
+
+shared file page
+
+validation of data (server and client side)
+
+
+
+////// DATABASE
+
 add-migration Initial
 
-// Regenerates/Deletes Configuration file - DO NOT USE!!!
-enable-migrations -Force
-
-
-
-// Updates the database with migration files
+enable-migrations
 update-database
 
-
-
 SELECT * FROM information_schema.tables
-
 SELECT  'DROP TABLE [' + name + '];'
 FROM    sys.tables
+
 
 DROP TABLE [Files];
 DROP TABLE [Folders];

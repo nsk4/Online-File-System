@@ -35,6 +35,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -205,9 +207,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612252148226_Initial.cs" />
-    <Compile Include="Migrations\201612252148226_Initial.Designer.cs">
-      <DependentUpon>201612252148226_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201612312129466_Initial.cs" />
+    <Compile Include="Migrations\201612312129466_Initial.Designer.cs">
+      <DependentUpon>201612312129466_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Old\AccountViewModels.cs" />
@@ -218,6 +220,7 @@
     <Compile Include="Models\Old\ManageViewModels.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\ViewModels\MainViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -229,8 +232,11 @@
     <Content Include="Command To Run.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\DeleteIcon.png" />
+    <Content Include="Content\Images\DownloadIcon.png" />
     <Content Include="Content\Images\FileIcon.png" />
     <Content Include="Content\Images\FolderIcon.png" />
+    <Content Include="Content\Images\ShareIcon.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -283,6 +289,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -329,6 +336,7 @@
     <Content Include="Views\Folders\Details.cshtml" />
     <Content Include="Views\Folders\Edit.cshtml" />
     <Content Include="Views\Folders\Index.cshtml" />
+    <Content Include="Views\Main\TestView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -342,11 +350,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612252148226_Initial.resx">
-      <DependentUpon>201612252148226_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612312129466_Initial.resx">
+      <DependentUpon>201612312129466_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

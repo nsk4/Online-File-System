@@ -45,7 +45,9 @@ namespace OnlineFileSystem.Models
         [Required]
         public FileContent Content { get; set; }
 
-        [Required]
         public Folder ParentFolder { get; set; }
+
+        [Required]
+        public UserAccount OwnerUserAccount { get; set; }
     }
 }

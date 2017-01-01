@@ -46,7 +46,8 @@ namespace OnlineFileSystem.Migrations
             fileC2.Data = new byte[] {8, 4, 5, 5};
             FileContent fileC3 = new FileContent();
             fileC3.Data = new byte[] {3, 4, 9, 1};
-
+            FileContent fileC4 = new FileContent();
+            fileC4.Data = new byte[] { 1, 1 };
 
 
 
@@ -103,6 +104,7 @@ namespace OnlineFileSystem.Migrations
             file1.DateModified = new DateTime(2016, 12, 10);
             file1.Content = fileC1;
             file1.ParentFolder = folder1;
+            file1.OwnerUserAccount = file1.ParentFolder.OwnerUserAccount;
 
             File file2 = new File();
             file2.Name = "test2.jpg";
@@ -113,6 +115,7 @@ namespace OnlineFileSystem.Migrations
             file2.DateModified = new DateTime(2016, 12, 11);
             file2.Content = fileC2;
             file2.ParentFolder = folder1;
+            file2.OwnerUserAccount = file2.ParentFolder.OwnerUserAccount;
 
             File file3 = new File();
             file3.Name = "test3";
@@ -124,14 +127,26 @@ namespace OnlineFileSystem.Migrations
             file3.DateModified = new DateTime(2016, 12, 10);
             file3.Content = fileC3;
             file3.ParentFolder = folder2;
+            file3.OwnerUserAccount = file3.ParentFolder.OwnerUserAccount;
 
-            
+            File file4 = new File();
+            file4.Name = "test4";
+            file4.Sharing = 0;
+            file4.FileType = "/";
+            file4.Link = "23432234";
+            file4.Size = 552384000;
+            file4.DateCreated = new DateTime(2016, 12, 9);
+            file4.DateModified = new DateTime(2016, 12, 10);
+            file4.Content = fileC4;
+            file4.OwnerUserAccount = user1;
+
+
 
             context.UserRoles.AddOrUpdate(roleAdmin, roleUser, roleUnconfirmed);
             context.UserAccounts.AddOrUpdate(user1, user2);
             context.Folders.AddOrUpdate(folder1, folder2, folder3);
-            context.FileContents.AddOrUpdate(fileC1, fileC2, fileC2);
-            context.Files.AddOrUpdate(file1, file2, file3);
+            context.FileContents.AddOrUpdate(fileC1, fileC2, fileC3, fileC4);
+            context.Files.AddOrUpdate(file1, file2, file3, file4);
             
             
 

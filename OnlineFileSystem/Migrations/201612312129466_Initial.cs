@@ -29,28 +29,14 @@ namespace OnlineFileSystem.Migrations
                         DateCreated = c.DateTime(nullable: false),
                         DateModified = c.DateTime(nullable: false),
                         Content_FileContentId = c.Int(nullable: false),
-                        ParentFolder_FolderId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.FileId)
-                .ForeignKey("dbo.FileContents", t => t.Content_FileContentId, cascadeDelete: true)
-                .ForeignKey("dbo.Folders", t => t.ParentFolder_FolderId, cascadeDelete: true)
-                .Index(t => t.Content_FileContentId)
-                .Index(t => t.ParentFolder_FolderId);
-            
-            CreateTable(
-                "dbo.Folders",
-                c => new
-                    {
-                        FolderId = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        DateCreated = c.DateTime(nullable: false),
-                        DateModified = c.DateTime(nullable: false),
                         OwnerUserAccount_UserAccountId = c.Int(nullable: false),
                         ParentFolder_FolderId = c.Int(),
                     })
-                .PrimaryKey(t => t.FolderId)
+                .PrimaryKey(t => t.FileId)
+                .ForeignKey("dbo.FileContents", t => t.Content_FileContentId, cascadeDelete: true)
                 .ForeignKey("dbo.UserAccounts", t => t.OwnerUserAccount_UserAccountId, cascadeDelete: true)
                 .ForeignKey("dbo.Folders", t => t.ParentFolder_FolderId)
+                .Index(t => t.Content_FileContentId)
                 .Index(t => t.OwnerUserAccount_UserAccountId)
                 .Index(t => t.ParentFolder_FolderId);
             
@@ -80,6 +66,23 @@ namespace OnlineFileSystem.Migrations
                         Role = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.UserRoleId);
+            
+            CreateTable(
+                "dbo.Folders",
+                c => new
+                    {
+                        FolderId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
+                        DateCreated = c.DateTime(nullable: false),
+                        DateModified = c.DateTime(nullable: false),
+                        OwnerUserAccount_UserAccountId = c.Int(nullable: false),
+                        ParentFolder_FolderId = c.Int(),
+                    })
+                .PrimaryKey(t => t.FolderId)
+                .ForeignKey("dbo.UserAccounts", t => t.OwnerUserAccount_UserAccountId, cascadeDelete: true)
+                .ForeignKey("dbo.Folders", t => t.ParentFolder_FolderId)
+                .Index(t => t.OwnerUserAccount_UserAccountId)
+                .Index(t => t.ParentFolder_FolderId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -160,6 +163,7 @@ namespace OnlineFileSystem.Migrations
             DropForeignKey("dbo.Files", "ParentFolder_FolderId", "dbo.Folders");
             DropForeignKey("dbo.Folders", "ParentFolder_FolderId", "dbo.Folders");
             DropForeignKey("dbo.Folders", "OwnerUserAccount_UserAccountId", "dbo.UserAccounts");
+            DropForeignKey("dbo.Files", "OwnerUserAccount_UserAccountId", "dbo.UserAccounts");
             DropForeignKey("dbo.UserAccounts", "Role_UserRoleId", "dbo.UserRoles");
             DropForeignKey("dbo.Files", "Content_FileContentId", "dbo.FileContents");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
@@ -168,19 +172,20 @@ namespace OnlineFileSystem.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.UserAccounts", new[] { "Role_UserRoleId" });
             DropIndex("dbo.Folders", new[] { "ParentFolder_FolderId" });
             DropIndex("dbo.Folders", new[] { "OwnerUserAccount_UserAccountId" });
+            DropIndex("dbo.UserAccounts", new[] { "Role_UserRoleId" });
             DropIndex("dbo.Files", new[] { "ParentFolder_FolderId" });
+            DropIndex("dbo.Files", new[] { "OwnerUserAccount_UserAccountId" });
             DropIndex("dbo.Files", new[] { "Content_FileContentId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Folders");
             DropTable("dbo.UserRoles");
             DropTable("dbo.UserAccounts");
-            DropTable("dbo.Folders");
             DropTable("dbo.Files");
             DropTable("dbo.FileContents");
         }
