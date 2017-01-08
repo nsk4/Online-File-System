@@ -16,16 +16,14 @@ namespace OnlineFileSystem.Controllers
 		// GET: AccountOptions
 		public ActionResult Index()
         {
-
 			UserAccount ua = db.UserAccounts.Single(u => u.Username == "TestUser2");
-			db.Entry(ua).Reference(c => c.Role).Load();
 			ViewBag.UserAccountId = ua.UserAccountId;
 	        ViewBag.Username = ua.Username;
 	        ViewBag.Email = ua.Email;
 	        ViewBag.DateModified = ua.DateModified;
 	        ViewBag.DateCreated = ua.DateCreated;
 	        ViewBag.LastLogin = ua.LastLogin;
-	        ViewBag.Role = ua.Role.Role;
+	        ViewBag.Role = ua.Role;
 
 			return View();
         }
@@ -37,14 +35,13 @@ namespace OnlineFileSystem.Controllers
 			UserAccount ua = db.UserAccounts.Single(u => u.UserAccountId == userId);
 		    if (ua == null) return View("Error");
 
-			db.Entry(ua).Reference(c => c.Role).Load();
 			ViewBag.UserAccountId = ua.UserAccountId;
 			ViewBag.Username = ua.Username;
 			ViewBag.Email = ua.Email;
 			ViewBag.DateModified = ua.DateModified;
 			ViewBag.DateCreated = ua.DateCreated;
 			ViewBag.LastLogin = ua.LastLogin;
-			ViewBag.Role = ua.Role.Role;
+			ViewBag.Role = ua.Role;
 
 			return View("Index");
 		}
@@ -57,15 +54,13 @@ namespace OnlineFileSystem.Controllers
 
 			UserAccount ua = db.UserAccounts.Find(userId);
 			if(ua == null) return View("Error");
-			db.Entry(ua).Reference(c => c.Role).Load();
 
-			string oldPasswordHashed = UserAccount.HashPassword(oldPassword, ua.PasswordSalt);
+			string oldPasswordHashed = Utility.HashPassword(oldPassword, ua.PasswordSalt);
 			if (ua.Password != oldPasswordHashed) return View("Error");
 
-
-
-		    ua.PasswordSalt = UserAccount.GenerateSalt();
-		    ua.Password = UserAccount.HashPassword(newPassword, ua.PasswordSalt);
+		    ua.PasswordSalt = Utility.GenerateRandomString();
+		    ua.Password = Utility.HashPassword(newPassword, ua.PasswordSalt);
+		    ua.DateModified = DateTime.Now;
 
 			db.SaveChanges();
 
@@ -73,16 +68,32 @@ namespace OnlineFileSystem.Controllers
 			
 		}
 
-	    public ActionResult ResendActivationEmail(int? userId)
+	    public ActionResult SendActivationEmail(int? userId)
 	    {
 		    if (userId == null) return View("Error");
 			UserAccount ua = db.UserAccounts.Find(userId);
-			if (ua == null) return View("Error");
+			if (ua == null || ua.Role != (int)Utility.AccountType.Unconfirmed) return View("Error");
 
-		    string email = ua.Email;
+			//string link = HtmlHelper.GenerateLink(this.ControllerContext.RequestContext, System.Web.Routing.RouteTable.Routes, "Confirm email", "Root", "ConfirmEmail", "AccountOptions", { userId = ua.UserAccountId, confirmationLink = ua.Confirmationlink }, null);
+			
+			UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
+			string url = u.Action("ConfirmEmail", "AccountOptions", new { userId = ua.UserAccountId, confirmationLink = ua.Confirmationlink });
+		    url = Request.Url.GetLeftPart(UriPartial.Authority) + url;
+			if (!Utility.SendConfirmationEmail(ua.Email, url)) return View("Error");
 
-			// TODO: sending of email
+			return RedirectToAction("OpenAccountOptions", "AccountOptions", new { userId = userId });
+		}
 
+	    public ActionResult ConfirmEmail(int? userId, string confirmationLink)
+	    {
+			if (userId == null || string.IsNullOrWhiteSpace(confirmationLink)) return View("Error");
+			UserAccount ua = db.UserAccounts.Find(userId);
+			if (ua == null || ua.Role != (int)Utility.AccountType.Unconfirmed || ua.Confirmationlink != confirmationLink) return View("Error");
+
+		    ua.Role = (int)Utility.AccountType.User;
+			ua.DateModified = DateTime.Now;
+			db.SaveChanges();
+			
 			return RedirectToAction("OpenAccountOptions", "AccountOptions", new { userId = userId });
 		}
 

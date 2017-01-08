@@ -31,15 +31,7 @@ namespace OnlineFileSystem.Migrations
 
 
             
-
-            UserRole roleAdmin = new UserRole();
-            roleAdmin.Role = "Admin";
-            UserRole roleUser = new UserRole();
-            roleUser.Role = "User";
-            UserRole roleUnconfirmed = new UserRole();
-            roleUnconfirmed.Role = "Unconfirmed";
-
-            
+			
             FileContent fileC1 = new FileContent();
             fileC1.Data = new byte[] {8, 4, 5, 5};
             FileContent fileC2 = new FileContent();
@@ -57,7 +49,8 @@ namespace OnlineFileSystem.Migrations
             user1.Password = "test";
             user1.PasswordSalt = "nippon";
             user1.Email = "nejcsk@hotmail.com";
-            user1.Role = roleUser;
+            user1.Role = 0;
+	        user1.Confirmationlink = "fgwergreeervevrev";
             user1.DateCreated = new DateTime(2014, 10, 20);
             user1.DateModified = new DateTime(2014, 10, 20);
             user1.LastLogin = new DateTime(2015, 11, 21);
@@ -67,8 +60,9 @@ namespace OnlineFileSystem.Migrations
             user2.Password = "test";
             user2.PasswordSalt = "nippon";
             user2.Email = "s.k.nejc@gmail.com";
-            user2.Role = roleUnconfirmed;
-            user2.DateCreated = new DateTime(2015, 10, 20);
+            user2.Role = 1;
+			user2.Confirmationlink = "cerveipoviervr";
+			user2.DateCreated = new DateTime(2015, 10, 20);
             user2.DateModified = new DateTime(2015, 10, 20);
             user2.LastLogin = new DateTime(2015, 11, 21);
 
@@ -140,9 +134,6 @@ namespace OnlineFileSystem.Migrations
             file4.Content = fileC4;
             file4.OwnerUserAccount = user1;
 
-
-
-            context.UserRoles.AddOrUpdate(roleAdmin, roleUser, roleUnconfirmed);
             context.UserAccounts.AddOrUpdate(user1, user2);
             context.Folders.AddOrUpdate(folder1, folder2, folder3);
             context.FileContents.AddOrUpdate(fileC1, fileC2, fileC3, fileC4);

@@ -7,17 +7,25 @@ http://www.iconsdb.com/gray-icons/?search=share
 
 
 TODO:
+CHANGE FUNCTION NAMES!!!!!!
 registration
 login
-account options
+forgot password
+non confirmed can access only profile info page
+non registered/logged in can access only front pate
+default page for non confirmed is account page
+default pate for confirmed is root folder page
 
-file share
+
 file rename
 group delete
 shared file page before downloading
 
 validation of data (server and client side)
 csrf file sharing and deleting
+
+
+
 
 
 
@@ -36,7 +44,6 @@ FROM    sys.tables
 DROP TABLE [Files];
 DROP TABLE [Folders];
 DROP TABLE [UserAccounts];
-DROP TABLE [UserRoles];
 DROP TABLE [AspNetUserRoles];
 DROP TABLE [AspNetUserClaims];
 DROP TABLE [AspNetUserLogins];

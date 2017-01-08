@@ -183,14 +183,13 @@ namespace OnlineFileSystem.Controllers
             string[] possibleTypes = fileName.Split('.');
             if (possibleTypes.Length > 1) fileType = possibleTypes.Last();
 
-            string link = null;
-            do
-            {
-                link = (ua.Username + newFileName + DateTime.Now.ToString("U") + (new Random()).Next(0, 1000).ToString()).GetHashCode().ToString();
-            } while (db.Files.Any(x => x.Link == link));
-            
+			string link = null;
+			do
+			{
+				link = (ua.Username + newFileName + DateTime.Now.ToString("U") + (new Random()).Next(0, 1000).ToString()).GetHashCode().ToString();
+			} while (db.Files.Any(x => x.Link == link));
 
-            File f = new File
+			File f = new File
             {
                 OwnerUserAccount = ua,
                 Content = fc,
@@ -249,10 +248,12 @@ namespace OnlineFileSystem.Controllers
             File f = db.Files.Find(fileId);
             if (f == null || f.OwnerUserAccount != ua) return View("Error");
 
-            FileContent fc = db.Files.Include(x => x.Content).First(x => x.FileId == fileId).Content; // damn lazy loading is lazy so make it eager
-            if (fc == null || fc.Data.Length <= 0) return View("Error");
+			db.Entry(f).Reference(c => c.Content).Load();
+	        FileContent fc = f.Content;
+			//FileContent fc = db.Files.Include(x => x.Content).FirstOrDefault(x => x.FileId == fileId).Content; // damn lazy loading is lazy so make it eager
+			// if (fc == null || fc.Data.Length <= 0) return View("Error");
 
-            db.Files.Remove(f);
+			db.Files.Remove(f);
             db.FileContents.Remove(fc);
             db.SaveChanges();
 
@@ -309,7 +310,9 @@ namespace OnlineFileSystem.Controllers
 
 	    public ActionResult DownloadSharedFile(string url)
 	    {
-		    File f = db.Files.First(s => s.Link == url);
+			if(url == null) return View("Error");
+			File f;
+			f = db.Files.FirstOrDefault(s => s.Link == url);
 			if (f == null || f.Sharing == 0) return View("Error");
 
 			db.Entry(f).Reference(c => c.Content).Load();

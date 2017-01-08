@@ -35,8 +35,8 @@ namespace OnlineFileSystem.Controllers
 
         public ActionResult GetView()
         {
-            
-
+	        return null;
+	        /*
             UserRole urc = new UserRole();
             urc.UserRoleId = 88;
             urc.Role = "Kebab";
@@ -44,7 +44,7 @@ namespace OnlineFileSystem.Controllers
             //ViewData["Role"] = urc;
             //ViewBag.Role = urc;
             return View("MyView", urc);
-
+	        */
 
         }
     }

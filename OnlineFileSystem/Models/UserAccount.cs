@@ -36,9 +36,12 @@ namespace OnlineFileSystem.Models
         public string Email { get; set; }
 
         [Required]
-        public UserRole Role { get; set; }
+        public int Role { get; set; }
 
-        [Required]
+		[Required]
+		public string Confirmationlink { get; set; }
+
+		[Required]
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
 
@@ -49,18 +52,5 @@ namespace OnlineFileSystem.Models
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime LastLogin { get; set; }
-
-
-	    public static string HashPassword(string password, string salt)
-	    {
-			return System.Convert.ToBase64String(new SHA256Managed().ComputeHash(Encoding.UTF8.GetBytes(password + salt)));
-	    }
-
-	    public static string GenerateSalt(int length = 1000)
-	    {
-			byte[] saltByte = new byte[length];
-			new RNGCryptoServiceProvider().GetNonZeroBytes(saltByte);
-		    return System.Convert.ToBase64String(saltByte);
-	    }
-    }
+	}
 }

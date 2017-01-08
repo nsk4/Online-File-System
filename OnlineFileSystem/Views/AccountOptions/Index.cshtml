@@ -19,7 +19,7 @@
 	DateTime DateModified = ViewBag.DateModified;
 	DateTime DateCreated = ViewBag.DateCreated;
 	DateTime LastLogin = ViewBag.LastLogin;
-	string Role = ViewBag.Role;
+	int Role = ViewBag.Role;
 
 }
 
@@ -28,12 +28,12 @@
 
 <div class="container-fluid">
 	
-	@if (@Role == AccountType.Unconfirmed.ToString())
+	@if (@Role == (int)Utility.AccountType.Unconfirmed)
 	{
 		<div class="row">
-			<dt>
-				<input type="button" class="btn btn-default" value="Resend confirmation email" />
-			</dt>
+			<div>
+				@Html.ActionLink("Resend confirmation email", "SendActivationEmail", "AccountOptions", new { userId = UserAccountId }, new { @class = "btn btn-default", @type = "button" })
+			</div>
 		</div>
 	}
 			
@@ -62,7 +62,7 @@
 					Role:
 				</dt>
 				<dd>
-					@Role
+					@Utility.IntToAccountType(Role)
 				</dd>
 				<dt>
 					Date Created:

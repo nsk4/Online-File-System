@@ -34,8 +34,6 @@ namespace OnlineFileSystem.Models
 
         public System.Data.Entity.DbSet<OnlineFileSystem.Models.Folder> Folders { get; set; }
 
-        public System.Data.Entity.DbSet<OnlineFileSystem.Models.UserRole> UserRoles { get; set; }
-
         public System.Data.Entity.DbSet<OnlineFileSystem.Models.UserAccount> UserAccounts { get; set; }
 
         public System.Data.Entity.DbSet<OnlineFileSystem.Models.FileContent> FileContents { get; set; }

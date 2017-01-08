@@ -49,23 +49,13 @@ namespace OnlineFileSystem.Migrations
                         Password = c.String(nullable: false),
                         PasswordSalt = c.String(nullable: false),
                         Email = c.String(nullable: false),
+                        Role = c.Int(nullable: false),
+                        Confirmationlink = c.String(nullable: false),
                         DateCreated = c.DateTime(nullable: false),
                         DateModified = c.DateTime(nullable: false),
                         LastLogin = c.DateTime(nullable: false),
-                        Role_UserRoleId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.UserAccountId)
-                .ForeignKey("dbo.UserRoles", t => t.Role_UserRoleId, cascadeDelete: true)
-                .Index(t => t.Role_UserRoleId);
-            
-            CreateTable(
-                "dbo.UserRoles",
-                c => new
-                    {
-                        UserRoleId = c.Int(nullable: false, identity: true),
-                        Role = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.UserRoleId);
+                .PrimaryKey(t => t.UserAccountId);
             
             CreateTable(
                 "dbo.Folders",
@@ -164,7 +154,6 @@ namespace OnlineFileSystem.Migrations
             DropForeignKey("dbo.Folders", "ParentFolder_FolderId", "dbo.Folders");
             DropForeignKey("dbo.Folders", "OwnerUserAccount_UserAccountId", "dbo.UserAccounts");
             DropForeignKey("dbo.Files", "OwnerUserAccount_UserAccountId", "dbo.UserAccounts");
-            DropForeignKey("dbo.UserAccounts", "Role_UserRoleId", "dbo.UserRoles");
             DropForeignKey("dbo.Files", "Content_FileContentId", "dbo.FileContents");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
@@ -174,7 +163,6 @@ namespace OnlineFileSystem.Migrations
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Folders", new[] { "ParentFolder_FolderId" });
             DropIndex("dbo.Folders", new[] { "OwnerUserAccount_UserAccountId" });
-            DropIndex("dbo.UserAccounts", new[] { "Role_UserRoleId" });
             DropIndex("dbo.Files", new[] { "ParentFolder_FolderId" });
             DropIndex("dbo.Files", new[] { "OwnerUserAccount_UserAccountId" });
             DropIndex("dbo.Files", new[] { "Content_FileContentId" });
@@ -184,7 +172,6 @@ namespace OnlineFileSystem.Migrations
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Folders");
-            DropTable("dbo.UserRoles");
             DropTable("dbo.UserAccounts");
             DropTable("dbo.Files");
             DropTable("dbo.FileContents");
