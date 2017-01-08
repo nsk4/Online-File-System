@@ -1,4 +1,6 @@
 ﻿@using System.Data.Entity
+@using System.Security.Permissions
+@using Microsoft.Ajax.Utilities
 @using OnlineFileSystem.Models
 @{
     //ViewBag.Title = "11111";
@@ -97,7 +99,19 @@
                         <td>@item.DateCreated</td>
                         <td>@item.DateModified</td>
                         <td>@item.FileType</td>
-                        <td>@Html.Raw(@item.Sharing == 1 ? "yes" : "no")</td>
+	                    <td>
+		                    @if (item.Sharing == 1)
+		                    {
+			                    string s = (Request.Url.GetLeftPart(UriPartial.Authority) + @Url.Action("DownloadSharedFile", "Main", new {url = item.Link}).ToString());
+			                    <input type="text" class="form-control" readonly="readonly" value="@s" onfocus="this.select();" onmouseup="return false;"/>
+								}
+								else
+								{
+									@Html.Raw("no");
+								}
+
+
+						</td>
                         <td>@item.Size</td>
                         <td>
                             <ul class="list-inline list-unstyled">
@@ -111,11 +125,22 @@
                                         <img src="@Url.Content("~/Content/Images/DeleteIcon.png")" title="Delete" class="smallRowImage" />
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="@Url.Action("ShareFile", "Main", new { userId = userId, currentFolderId = currentFolder?.FolderId, fileId = item.FileId })">
-                                        <img src="@Url.Content("~/Content/Images/ShareIcon.png")" title="Share" class="smallRowImage" />
-                                    </a>
-                                </li>
+	                            <li>
+		                            @if (item.Sharing == 0)
+									{
+										<a href="@Url.Action("ShareFile", "Main", new {userId = userId, currentFolderId = currentFolder?.FolderId, fileId = item.FileId})">
+											<img src="@Url.Content("~/Content/Images/ShareIcon.png")" title="Share" class="smallRowImage" />
+										</a>
+									}
+									else
+									{
+										<a href="@Url.Action("StopShareFile", "Main", new {userId = userId, currentFolderId = currentFolder?.FolderId, fileId = item.FileId})">
+											<img src="@Url.Content("~/Content/Images/ShareIconCancel.png")" title="Share" class="smallRowImage" />
+										</a>
+									}
+
+		                            
+	                            </li>
                             </ul>
                             
                             

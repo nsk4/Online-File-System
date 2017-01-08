@@ -23,4 +23,11 @@ namespace OnlineFileSystem.Models
         [DataType(DataType.Text)]
         public string Role { get; set; }
     }
+
+	public enum AccountType
+	{
+		User = 0,
+		Unconfirmed = 1,
+		Admin = 2
+	}
 }

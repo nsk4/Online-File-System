@@ -198,6 +198,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountOptionsController.cs" />
     <Compile Include="Controllers\FoldersController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\Old\AccountController.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Content\Images\FileIcon.png" />
     <Content Include="Content\Images\FolderIcon.png" />
     <Content Include="Content\Images\ShareIcon.png" />
+    <Content Include="Content\Images\ShareIconCancel.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -337,6 +339,7 @@
     <Content Include="Views\Folders\Edit.cshtml" />
     <Content Include="Views\Folders\Index.cshtml" />
     <Content Include="Views\Main\TestView.cshtml" />
+    <Content Include="Views\AccountOptions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -354,6 +357,7 @@
       <DependentUpon>201612312129466_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

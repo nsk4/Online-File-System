@@ -14,10 +14,10 @@ account options
 file share
 file rename
 group delete
-
-shared file page
+shared file page before downloading
 
 validation of data (server and client side)
+csrf file sharing and deleting
 
 
 

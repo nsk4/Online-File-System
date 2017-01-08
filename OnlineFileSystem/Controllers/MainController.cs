@@ -17,6 +17,7 @@ namespace OnlineFileSystem.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
         // GET: Main
         public ActionResult Index()
         {
@@ -29,25 +30,6 @@ namespace OnlineFileSystem.Controllers
             ViewBag.fileList = fileList;
 
             return View();
-        }
-
-        public ActionResult GetData(string userId)
-        {
-            if (userId == null) return View("Error");
-            List<UserAccount> uaList =
-                (from account in db.UserAccounts.ToList() where account.Username == userId select account).ToList();
-            if (uaList.Count != 1) return View("Error");
-            UserAccount ua = uaList.First();
-            //UserAccount ua = db.UserAccounts.Single(u => u.Username == userId);
-
-            List<Folder> folderList =
-                (from item in db.Folders.ToList() where item.OwnerUserAccount == ua select item).ToList();
-            List<File> fileList = (from item in db.Files.ToList() where item.ParentFolder == null select item).ToList();
-            ViewBag.folderList = folderList;
-            ViewBag.fileList = fileList;
-            ViewBag.userId = userId;
-
-            return View("Index");
         }
 
         public ActionResult OpenFolder(int? userId, int? folderId)
@@ -229,8 +211,6 @@ namespace OnlineFileSystem.Controllers
             return RedirectToAction("OpenFolder", "Main", new { userId = userId, folderId = currentFolder?.FolderId });
         }
 
-
-
         public ActionResult DownloadFile(int? userId, int? fileId)
         {
             if (userId == null) return View("Error");
@@ -241,8 +221,10 @@ namespace OnlineFileSystem.Controllers
             File f = db.Files.Find(fileId);
             if (f == null || f.OwnerUserAccount != ua) return View("Error");
 
-            FileContent fc = db.Files.Include(x => x.Content).First(x => x.FileId == fileId).Content; // damn lazy loading is lazy so make it eager
-            if (fc == null || fc.Data.Length <= 0) return View("Error");
+			db.Entry(f).Reference(c => c.Content).Load();
+			//FileContent fc = db.Files.Include(x => x.Content).First(x => x.FileId == fileId).Content; // damn lazy loading is lazy so make it eager
+            //if (fc == null || fc.Data.Length <= 0) return View("Error");
+	        FileContent fc = f.Content;
 
             string fileName = f.Name;
             if (f.FileType != "/" && f.Name.Split('.').Last() != f.FileType) fileName += "." + f.FileType;
@@ -279,8 +261,6 @@ namespace OnlineFileSystem.Controllers
 
         public ActionResult ShareFile(int? userId, int? currentFolderId, int? fileId)
         {
-            // TODO: finish this
-
             if (userId == null) return View("Error");
             UserAccount ua = db.UserAccounts.Find(userId);
             if (ua == null) return View("Error");
@@ -295,11 +275,51 @@ namespace OnlineFileSystem.Controllers
             if (fileId == null) return View("Error");
             File f = db.Files.Find(fileId);
             if (f == null || f.OwnerUserAccount != ua) return View("Error");
+			db.Entry(f).Reference(c => c.Content).Load();
 
-            f.Sharing = 1;
+			f.Sharing = 1;
             db.SaveChanges();
 
             return RedirectToAction("OpenFolder", "Main", new { userId = userId, folderId = currentFolder?.FolderId });
         }
-    }
+
+		public ActionResult StopShareFile(int? userId, int? currentFolderId, int? fileId)
+		{
+			if (userId == null) return View("Error");
+			UserAccount ua = db.UserAccounts.Find(userId);
+			if (ua == null) return View("Error");
+
+			Folder currentFolder = null;
+			if (currentFolderId != null)
+			{
+				currentFolder = db.Folders.Find(currentFolderId);
+				if (currentFolder == null || currentFolder.OwnerUserAccount != ua) return View("Error");
+			}
+
+			if (fileId == null) return View("Error");
+			File f = db.Files.Find(fileId);
+			if (f == null || f.OwnerUserAccount != ua) return View("Error");
+			db.Entry(f).Reference(c => c.Content).Load();
+
+			f.Sharing = 0;
+			db.SaveChanges();
+
+			return RedirectToAction("OpenFolder", "Main", new { userId = userId, folderId = currentFolder?.FolderId });
+		}
+
+	    public ActionResult DownloadSharedFile(string url)
+	    {
+		    File f = db.Files.First(s => s.Link == url);
+			if (f == null || f.Sharing == 0) return View("Error");
+
+			db.Entry(f).Reference(c => c.Content).Load();
+			FileContent fc = f.Content;
+
+			string fileName = f.Name;
+			if (f.FileType != "/" && f.Name.Split('.').Last() != f.FileType) fileName += "." + f.FileType;
+
+			return File(fc.Data, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+		}
+
+	}
 }

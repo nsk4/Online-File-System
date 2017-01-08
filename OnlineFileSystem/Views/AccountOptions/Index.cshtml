@@ -1,0 +1,125 @@
+﻿@using OnlineFileSystem.Models
+@{
+	//ViewBag.Title ="11111";
+	/*
+	List<Folder> folderList = (List<Folder>)ViewBag.folderList;
+	List<OnlineFileSystem.Models.File> fileList = (List<OnlineFileSystem.Models.File>)ViewBag.fileList;
+	int? userId = ViewBag.userId;
+
+	Folder currentFolder = null;
+	if (ViewBag.currentFolder != null)
+	{
+		currentFolder = ViewBag.currentFolder;
+	}
+	*/
+
+	int UserAccountId = ViewBag.UserAccountId;
+	string Username = ViewBag.Username;
+	string Email = ViewBag.Email;
+	DateTime DateModified = ViewBag.DateModified;
+	DateTime DateCreated = ViewBag.DateCreated;
+	DateTime LastLogin = ViewBag.LastLogin;
+	string Role = ViewBag.Role;
+
+}
+
+<p></p>
+
+
+<div class="container-fluid">
+	
+	@if (@Role == AccountType.Unconfirmed.ToString())
+	{
+		<div class="row">
+			<dt>
+				<input type="button" class="btn btn-default" value="Resend confirmation email" />
+			</dt>
+		</div>
+	}
+			
+	<div class="row">
+		<div class="col-md-12">
+			<dl class="dl-horizontal">
+				<dt>
+					Username:
+				</dt>
+				<dd>
+					@Username
+				</dd>
+				<dt>
+					Password:
+				</dt>
+				<dd>
+					****
+				</dd>
+				<dt>
+					Email:
+				</dt>
+				<dd>
+					@Email
+				</dd>
+				<dt>
+					Role:
+				</dt>
+				<dd>
+					@Role
+				</dd>
+				<dt>
+					Date Created:
+				</dt>
+				<dd>
+					@DateCreated
+				</dd>
+				<dt>
+					Date Modified:
+				</dt>
+				<dd>
+					@DateModified
+				</dd>
+				<dt>
+					Last Login:
+				</dt>
+				<dd>
+					@LastLogin
+				</dd>
+
+				<dt>
+					<button class="btn btn-default" type="button" data-toggle="modal" data-target="#changePasswordPopup">
+						Change password
+					</button>
+				</dt>
+			</dl>
+		</div>
+	</div>
+</div>
+
+
+<!-- Change Password -->
+<div class="modal fade" id="changePasswordPopup" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				@using (Html.BeginForm("ChangePassword", "AccountOptions", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
+				{
+					@Html.AntiForgeryToken()
+					<div class="form-group">
+						<label for="oldPassword">Old password</label>
+						<input type="text" class="form-control" id="oldPassword" name="oldPassword" placeholder="Enter old password" />
+					</div>
+					<div class="form-group">
+						<label for="newPassword">New password</label>
+						<input type="text" class="form-control" id="newPassword" name="newPassword" placeholder="Enter new password" />
+					</div>
+					<div class="form-group">
+						<label for="newPasswordRepeat">Folder name</label>
+						<input type="text" class="form-control" id="newPasswordRepeat" name="newPasswordRepeat" placeholder="Repeat new password" />
+					</div>
+					<input type="hidden" name="userId" value="@UserAccountId" />
+
+					<button type="submit" class="btn btn-primary">Change</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				}
+			</div>
+		</div>
+	</div>
+</div>
