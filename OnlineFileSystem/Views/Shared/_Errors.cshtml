@@ -1,0 +1,7 @@
+﻿@{
+	string error = ViewBag.Error;
+	if (!string.IsNullOrWhiteSpace(error))
+	{
+		<li><a style="color:red">@error</a></li>
+	}
+}

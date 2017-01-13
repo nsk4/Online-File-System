@@ -10,37 +10,69 @@ namespace OnlineFileSystem.Controllers
 {
     public class FrontController : Controller
     {
+		readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		private ApplicationDbContext db = new ApplicationDbContext();
 
+		/// <summary>
+		/// Verifies the login data and is they are correct the session is started
+		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Login(string username, string password)
 		{
 			// TODO: change function signature
-			if (username.IsNullOrWhiteSpace() || password.IsNullOrWhiteSpace()) return RedirectToAction("Index", "Home");
+			if (username.IsNullOrWhiteSpace() || password.IsNullOrWhiteSpace())
+			{
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.InvalidFormData);
+				return RedirectToAction("Index", "Home");
+			}
 
 			UserAccount ua = db.UserAccounts.FirstOrDefault(u => u.Username == username);
-			if (ua == null || ua.Password != Utility.HashPassword(password, ua.PasswordSalt)) return RedirectToAction("Index", "Home");
+			if (ua == null || ua.Password != Utility.HashPassword(password, ua.PasswordSalt))
+			{
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.InvalidUsernameOrPassword);
+				logger.Info("Invalid username/password for username " + username);
+				return RedirectToAction("Index", "Home");
+			}
 
 			ua.LastLogin = DateTime.Now;
 			db.SaveChanges();
-
+			logger.Info("User logged in " + ua.Username);
 			// TODO: logged in
 			Session["user"] = ua;
 			
-			return RedirectToAction("OpenFolder", "Main");
+			return RedirectToAction("Index", "Main");
 		}
 
+		/// <summary>
+		/// Registers the new user to the system
+		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Register(string username, string password, string passwordRepeat, string email, string emailRepeat)
 		{
-			// TODO: change function signature
-			if (username.IsNullOrWhiteSpace() || password.IsNullOrWhiteSpace() || passwordRepeat.IsNullOrWhiteSpace() || email.IsNullOrWhiteSpace() || emailRepeat.IsNullOrWhiteSpace() || password != passwordRepeat || email != emailRepeat) return RedirectToAction("Index", "Home");
+			if (username.IsNullOrWhiteSpace() || password.IsNullOrWhiteSpace() || passwordRepeat.IsNullOrWhiteSpace() ||
+			    email.IsNullOrWhiteSpace() || emailRepeat.IsNullOrWhiteSpace() || password != passwordRepeat ||
+			    email != emailRepeat)
+			{
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.InvalidFormData);
+				return RedirectToAction("Index", "Home");
+			}
+				
 			int numOfAccounts = db.UserAccounts.Count(s => s.Username == username);
-			if (numOfAccounts != 0) return RedirectToAction("Index", "Home");
+			if (numOfAccounts != 0)
+			{
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.AccountWithThisUsernameAlreadyExists);
+				logger.Info("Account already exists for username " + username);
+				return RedirectToAction("Index", "Home");
+			}
 			int numOfEmails = db.UserAccounts.Count(s => s.Email == email);
-			if (numOfEmails != 0) return RedirectToAction("Index", "Home");
+			if (numOfEmails != 0)
+			{
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.AccountWithThisEmailAlreadyExists);
+				logger.Info("Account already exists for email " + email);
+				return RedirectToAction("Index", "Home");
+			}
 
 			string link = null;
 			do
@@ -65,17 +97,32 @@ namespace OnlineFileSystem.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
+		/// <summary>
+		/// Sends a new temporary password to the user
+		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult ForgotPassword(string email)
 	    {
-			// TODO: change function signature
-			if (email.IsNullOrWhiteSpace()) return RedirectToAction("Index", "Home");
+		    if (email.IsNullOrWhiteSpace())
+		    {
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.InvalidFormData);
+				return RedirectToAction("Index", "Home");
+		    }
 			UserAccount ua = db.UserAccounts.FirstOrDefault(u => u.Email == email);
-		    if (ua == null) return RedirectToAction("Index", "Home");
+		    if (ua == null)
+		    {
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.InvalidEmail);
+				return RedirectToAction("Index", "Home");
+		    }
 
 			string password = Utility.GenerateRandomString();
-		    if (!Utility.SendPasswordResetEmail(email, password)) return View("Error");
+		    if (!Utility.SendPasswordResetEmail(email, password))
+		    {
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.ErrorInSendingEmail);
+				logger.Warn("Error in sending password reset email to user " + ua.Username);
+				return RedirectToAction("Index", "Home");
+			}
 			ua.Password = Utility.HashPassword(password, ua.PasswordSalt);
 			ua.DateModified = DateTime.Now;
 		    db.SaveChanges();
@@ -83,7 +130,10 @@ namespace OnlineFileSystem.Controllers
 		    return RedirectToAction("Index", "Home");
 		}
 
-	    public ActionResult Logout()
+		/// <summary>
+		/// Clears the session thus logging user out
+		/// </summary>
+		public ActionResult Logout()
 	    {
 			Session.RemoveAll();
 			return RedirectToAction("Index", "Home");

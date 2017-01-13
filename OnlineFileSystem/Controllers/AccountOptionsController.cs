@@ -12,95 +12,92 @@ namespace OnlineFileSystem.Controllers
 	[AuthorizationFilter]
 	public class AccountOptionsController : Controller
     {
+		readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		private ApplicationDbContext db = new ApplicationDbContext();
 
+		/// <summary>
+		/// Returns the default view for account options
+		/// </summary>
 		[AuthorizationFilter]
-		// GET: AccountOptions
 		public ActionResult Index()
         {
-			/*
-			UserAccount ua = db.UserAccounts.Single(u => u.Username == "TestUser2");
-			ViewBag.UserAccountId = ua.UserAccountId;
-	        ViewBag.Username = ua.Username;
-	        ViewBag.Email = ua.Email;
-	        ViewBag.DateModified = ua.DateModified;
-	        ViewBag.DateCreated = ua.DateCreated;
-	        ViewBag.LastLogin = ua.LastLogin;
-	        ViewBag.Role = ua.Role;
-			*/
+			ViewBag.Error = TempData["Error"];
 			return View("Index");
         }
 
-		[Obsolete]
-		[AuthorizationFilter]
-		public ActionResult OpenAccountOptions()
-	    {
-		    //if (userId == null) return View("Error");
-
-			//UserAccount ua = db.UserAccounts.Single(u => u.UserAccountId == userId);
-			//UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
-			//if (ua == null) return View("Error");
-			/*
-			ViewBag.UserAccountId = ua.UserAccountId;
-			ViewBag.Username = ua.Username;
-			ViewBag.Email = ua.Email;
-			ViewBag.DateModified = ua.DateModified;
-			ViewBag.DateCreated = ua.DateCreated;
-			ViewBag.LastLogin = ua.LastLogin;
-			ViewBag.Role = ua.Role;
-			*/
-			return View("Index");
-		}
-
+		/// <summary>
+		/// Changes account password
+		/// </summary>
 		[ValidateAntiForgeryToken]
 		[HttpPost]
 		[AuthorizationFilter]
 		public ActionResult ChangePassword(string oldPassword, string newPassword, string newPasswordRepeat)
 	    {
-			if (newPassword != newPasswordRepeat || string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(newPasswordRepeat)) return View("Error");
+		    if (newPassword != newPasswordRepeat || string.IsNullOrWhiteSpace(newPassword) ||
+		        string.IsNullOrWhiteSpace(newPasswordRepeat))
+		    {
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.InvalidFormData);
+			    return RedirectToAction("Index", "AccountOptions");
+		    }
 
 			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
-			//if (ua == null) return View("Error");
-
 			string oldPasswordHashed = Utility.HashPassword(oldPassword, ua.PasswordSalt);
-			if (ua.Password != oldPasswordHashed) return View("Error");
+		    if (ua.Password != oldPasswordHashed)
+		    {
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.PasswordDoesNotMatch);
+				return RedirectToAction("Index", "AccountOptions");
+			}
 
 		    ua.PasswordSalt = Utility.GenerateRandomString();
 		    ua.Password = Utility.HashPassword(newPassword, ua.PasswordSalt);
 		    ua.DateModified = DateTime.Now;
-
 			db.SaveChanges();
 
 			return RedirectToAction("Index", "AccountOptions");
 			
 		}
 
-		[AuthorizationFilter]
+		/// <summary>
+		/// Sends email to the user to confirm their account
+		/// </summary>
+		[AuthorizationFilter(Utility.AccountType.Unconfirmed)]
 		public ActionResult SendActivationEmail()
 	    {
-			//if (userId == null) return View("Error");
-			//UserAccount ua = db.UserAccounts.Find(userId);
 			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
-			if (ua.Role != (int)Utility.AccountType.Unconfirmed) return View("Error");
-
-			//string link = HtmlHelper.GenerateLink(this.ControllerContext.RequestContext, System.Web.Routing.RouteTable.Routes, "Confirm email", "Root", "ConfirmEmail", "AccountOptions", { userId = ua.UserAccountId, confirmationLink = ua.Confirmationlink }, null);
-
-			
 			UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
 			string url = u.Action("ConfirmEmail", "AccountOptions", new { userId = ua.UserAccountId, confirmationLink = ua.Confirmationlink });
 		    url = Request.Url.GetLeftPart(UriPartial.Authority) + url;
-			if (!Utility.SendConfirmationEmail(ua.Email, url)) return View("Error");
+		    if (!Utility.SendConfirmationEmail(ua.Email, url))
+		    {
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.ErrorInSendingEmail);
+				logger.Warn("Error in sending email confirmation to user " + ua.Username);
+				return RedirectToAction("Index", "AccountOptions");
+		    }
 
 			return RedirectToAction("Index", "AccountOptions");
 		}
 
+		/// <summary>
+		/// Is called when unconfirmed user wants to confirm their email
+		/// </summary>
 		[AllowAnonymous]
 		public ActionResult ConfirmEmail(string confirmationLink)
 	    {
-			if (string.IsNullOrWhiteSpace(confirmationLink)) return View("Error");
-			//UserAccount ua = db.UserAccounts.Find(userId);
+		    if (string.IsNullOrWhiteSpace(confirmationLink))
+		    {
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.InvalidFormData);
+				if(Session["user"]== null) return RedirectToAction("Index", "Home");
+				else return RedirectToAction("Index", "AccountOptions");
+			}
+
 			UserAccount ua = db.UserAccounts.FirstOrDefault(u => u.Confirmationlink == confirmationLink);
-			if (ua == null || ua.Role != (int)Utility.AccountType.Unconfirmed || ua.Confirmationlink != confirmationLink) return View("Error");
+		    if (ua == null || ua.Role != (int) Utility.AccountType.Unconfirmed || ua.Confirmationlink != confirmationLink)
+		    {
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.InvalidFormData);
+				logger.Warn("Error confirming email for user " + ua.Username);
+				if (Session["user"] == null) return RedirectToAction("Index", "Home");
+				else return RedirectToAction("Index", "AccountOptions");
+			}
 
 		    ua.Role = (int)Utility.AccountType.User;
 			ua.DateModified = DateTime.Now;

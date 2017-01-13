@@ -50,6 +50,11 @@
 					<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 					-->
 				</ul>
+				
+				<ul class="nav navbar-nav">
+					@Html.Partial("_Errors")
+				</ul>
+
 				@Html.Partial("_LoginPartial")
 			</div>
 		</div>
@@ -61,7 +66,10 @@
 	<div class="navbar navbar-inverse navbar-fixed-bottom">
 		<hr />
 		<footer class="container">
-			<p style="color: #999999">&copy; @DateTime.Now.Year - Panda File System</p>
+			<p>
+				<span style="color: #999999">&copy; @DateTime.Now.Year - Panda File System</span>
+				<span class="pull-right">@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</span>
+			</p>
 		</footer>
 	</div>
 

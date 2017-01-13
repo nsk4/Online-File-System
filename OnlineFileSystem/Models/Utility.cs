@@ -121,5 +121,91 @@ namespace OnlineFileSystem.Models
 
 			return -1;
 		}
+
+		public enum ErrorType
+		{
+			InvalidUsernameOrPassword,
+			InvalidFolder,
+			AccountWithThisUsernameAlreadyExists,
+			AccountWithThisEmailAlreadyExists,
+			InvalidFormData,
+			ErrorInSendingEmail,
+			InvalidEmail,
+			PasswordDoesNotMatch,
+			InvalidFile,
+			Unauthorized,
+			UnauthorizedUnconfirmed,
+			LoginRequired,
+			FileTooLarge,
+
+
+			Error400,
+			Error403,
+			Error404,
+			Error500
+		}
+
+		public static string GetErrorMessage(ErrorType et)
+		{
+			string message = "";
+			switch (et)
+			{
+				case ErrorType.InvalidUsernameOrPassword:
+					message = "Username and/or password is invalid.";
+					break;
+				case ErrorType.InvalidFolder:
+					message = "Folder is not valid.";
+					break;
+				case ErrorType.AccountWithThisUsernameAlreadyExists:
+					message = "Account with this username already exists.";
+					break;
+				case ErrorType.AccountWithThisEmailAlreadyExists:
+					message = "Account with this email already exists.";
+					break;
+				case ErrorType.InvalidFormData:
+					message = "Form data is invalid.";
+					break;
+				case ErrorType.ErrorInSendingEmail:
+					message = "Error in sending email.";
+					break;
+				case ErrorType.InvalidEmail:
+					message = "There is no user with this email.";
+					break;
+				case ErrorType.PasswordDoesNotMatch:
+					message = "Password does not match.";
+					break;
+				case ErrorType.InvalidFile:
+					message = "File is not valid.";
+					break;
+				case ErrorType.Unauthorized:
+					message = "You are not authorised to see this page.";
+					break;
+				case ErrorType.UnauthorizedUnconfirmed:
+					message = "Unauthorized, confirm your account first.";
+					break;
+				case ErrorType.LoginRequired:
+					message = "Unauthorized, log in first.";
+					break;
+				case ErrorType.FileTooLarge:
+					message = "File is too large.";
+					break;
+				case ErrorType.Error400:
+					message = "Error 400: Bad request.";
+					break;
+				case ErrorType.Error403:
+					message = "Error 403: You are fobidden to access this resource.";
+					break;
+				case ErrorType.Error404:
+					message = "Error 404: Page not found.";
+					break;
+				case ErrorType.Error500:
+					message = "Error 500: There was an internal server error.";
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(et), et, null);
+			}
+
+			return message;
+		}
 	}
 }

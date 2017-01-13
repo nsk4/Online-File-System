@@ -18,6 +18,12 @@ namespace OnlineFileSystem
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-        }
+
+			routes.MapRoute(
+				name: "Unconfirmed Account",
+				url: "{controller}/{action}",
+				defaults: new { controller = "AccountOptions", action = "Index"}
+			);
+		}
     }
 }

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace OnlineFileSystem.Models
 {
@@ -23,6 +24,7 @@ namespace OnlineFileSystem.Models
 			if (ua == null)
 			{
 				filterContext.Result = new HttpUnauthorizedResult();
+				filterContext.Controller.TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.LoginRequired);
 				return;
 			}
 			if (this.UserProfilesRequired.Length == 0) return;
@@ -38,7 +40,17 @@ namespace OnlineFileSystem.Models
 			}
 			if (!authorized)
 			{
-				filterContext.Result = filterContext.Result = new HttpUnauthorizedResult();
+				if (ua.Role == Utility.AccountTypeToInt(Utility.AccountType.Unconfirmed))
+				{
+					filterContext.Controller.TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.UnauthorizedUnconfirmed);
+				}
+					
+				else
+				{
+					filterContext.Controller.TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.Unauthorized);
+				}
+				filterContext.Result = new HttpUnauthorizedResult();
+
 				return;
 			}
 

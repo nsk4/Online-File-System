@@ -1,4 +1,5 @@
-﻿@using OnlineFileSystem.Models
+﻿@using System.Runtime.Versioning
+@using OnlineFileSystem.Models
 @{
 	//ViewBag.Title ="11111";
 	/*
@@ -19,7 +20,6 @@
 
 
 <div class="container-fluid">
-	
 	@if (@ua.Role == (int)Utility.AccountType.Unconfirmed)
 	{
 		<div class="row">

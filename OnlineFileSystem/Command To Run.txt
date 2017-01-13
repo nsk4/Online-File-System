@@ -25,8 +25,8 @@ validation of data (server and client side)
 csrf file sharing and deleting
 
 
-
-
+////// Logger
+Install-Package LogWeb.log4net.WebAppender
 
 
 ////// DATABASE
