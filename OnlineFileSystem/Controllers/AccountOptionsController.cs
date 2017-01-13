@@ -9,11 +9,14 @@ using OnlineFileSystem.Models;
 
 namespace OnlineFileSystem.Controllers
 {
+	/// <summary>
+	/// Handle account options and settings
+	/// </summary>
 	[AuthorizationFilter]
 	public class AccountOptionsController : Controller
     {
 		readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-		private ApplicationDbContext db = new ApplicationDbContext();
+		private readonly ApplicationDbContext db = new ApplicationDbContext();
 
 		/// <summary>
 		/// Returns the default view for account options

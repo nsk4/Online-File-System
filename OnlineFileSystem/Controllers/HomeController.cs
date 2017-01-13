@@ -6,6 +6,9 @@ using System.Web.Mvc;
 
 namespace OnlineFileSystem.Controllers
 {
+	/// <summary>
+	/// Default home page controller
+	/// </summary>
     public class HomeController : Controller
     {
 		/// <summary>

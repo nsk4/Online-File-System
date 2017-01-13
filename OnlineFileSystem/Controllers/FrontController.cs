@@ -8,10 +8,13 @@ using OnlineFileSystem.Models;
 
 namespace OnlineFileSystem.Controllers
 {
+	/// <summary>
+	/// Handles user actions before they login
+	/// </summary>
     public class FrontController : Controller
     {
 		readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-		private ApplicationDbContext db = new ApplicationDbContext();
+		private readonly ApplicationDbContext db = new ApplicationDbContext();
 
 		/// <summary>
 		/// Verifies the login data and is they are correct the session is started

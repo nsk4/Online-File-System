@@ -13,11 +13,14 @@ using OnlineFileSystem.Models;
 
 namespace OnlineFileSystem.Controllers
 {
+	/// <summary>
+	/// Main controller that is handling folders and files data
+	/// </summary>
 	[AuthorizationFilter(Utility.AccountType.Admin, Utility.AccountType.User)]
 	public class MainController : Controller
     {
 		readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-		private ApplicationDbContext db = new ApplicationDbContext();
+		private readonly ApplicationDbContext db = new ApplicationDbContext();
 
 
 		/// <summary>
