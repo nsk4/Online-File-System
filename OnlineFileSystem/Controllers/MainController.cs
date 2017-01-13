@@ -13,73 +13,73 @@ using OnlineFileSystem.Models;
 
 namespace OnlineFileSystem.Controllers
 {
-    public class MainController : Controller
+	[AuthorizationFilter(Utility.AccountType.Admin, Utility.AccountType.User)]
+	public class MainController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
 
-        // GET: Main
-        public ActionResult Index()
+		// GET: Main
+		public ActionResult Index()
+		{
+			/*
+			if (Session["user"] == null) return View("Error");
+			UserAccount ua = (UserAccount)Session["user"];
+			//UserAccount ua = db.UserAccounts.Single(u => u.Username == "TestUser1");
+			List<Folder> folderList =
+				(from item in db.Folders.ToList() where item.OwnerUserAccount == ua select item).ToList();
+			ViewBag.folderList = folderList;
+			List<File> fileList =
+				(from item in db.Files.ToList() where folderList.Contains(item.ParentFolder) select item).ToList();
+			ViewBag.fileList = fileList;
+			*/
+			return RedirectToAction("OpenFolder", "Main");
+		}
+
+
+		
+		public ActionResult OpenFolder(int? folderId)
         {
-            UserAccount ua = db.UserAccounts.Single(u => u.Username == "TestUser1");
-            List<Folder> folderList =
-                (from item in db.Folders.ToList() where item.OwnerUserAccount == ua select item).ToList();
-            ViewBag.folderList = folderList;
-            List<File> fileList =
-                (from item in db.Files.ToList() where folderList.Contains(item.ParentFolder) select item).ToList();
-            ViewBag.fileList = fileList;
+            //if (userId == null) return View("Error");
+            //UserAccount ua = db.UserAccounts.Find(userId);
+            //if (ua == null) return View("Error");
 
-            return View();
-        }
-
-        public ActionResult OpenFolder(int? userId, int? folderId)
-        {
-            if (userId == null) return View("Error");
-            UserAccount ua = db.UserAccounts.Find(userId);
-            if (ua == null) return View("Error");
-
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
             Folder currentFolder = null;
-            if (folderId != null)
+			if (folderId != null)
             {
                 currentFolder = db.Folders.Find(folderId);
                 if (currentFolder == null || currentFolder.OwnerUserAccount != ua) return View("Error");
             }
 
-            List<Folder> folderList =
-            (from item in db.Folders.ToList()
-                where item.OwnerUserAccount == ua && item.ParentFolder == currentFolder
-                select item).ToList();
-            List<File> fileList = (from item in db.Files.ToList()
-                where item.ParentFolder == currentFolder && item.OwnerUserAccount.UserAccountId == userId
-                select item).ToList();
+            List<Folder> folderList = (db.Folders.ToList().Where(item => item.OwnerUserAccount == ua && item.ParentFolder == currentFolder)).ToList();
+            List<File> fileList = (db.Files.ToList().Where(item => item.ParentFolder == currentFolder && item.OwnerUserAccount == ua)).ToList();
 
             ViewBag.currentFolder = currentFolder;
             ViewBag.folderList = folderList;
             ViewBag.fileList = fileList;
-            ViewBag.userId = userId;
+            //ViewBag.userId = ua.UserAccountId;
 
             return View("Index");
         }
 
-
-        [ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult CreateFolder(int? userId, int? currentFolderId, string newFolderName)
+		public ActionResult CreateFolder(int? currentFolderId, string newFolderName)
         {
             if (string.IsNullOrWhiteSpace(newFolderName)) return View("Error");
 
-            if (userId == null) return View("Error");
-            UserAccount ua = db.UserAccounts.Find(userId);
-            if (ua == null) return View("Error");
-
-            Folder currentFolder = null;
+			//UserAccount ua = db.UserAccounts.Find(Session["user"]);
+			//if (ua == null) return View("Error");
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
+			Folder currentFolder = null;
             if (currentFolderId != null)
             {
                 currentFolder = db.Folders.Find(currentFolderId);
                 if (currentFolder == null || currentFolder.OwnerUserAccount != ua) return View("Error");
             }
-
-            Folder f = new Folder
+	        
+			Folder f = new Folder
             {
                 OwnerUserAccount = ua,
                 ParentFolder = currentFolder,
@@ -90,69 +90,67 @@ namespace OnlineFileSystem.Controllers
             db.Folders.Add(f);
             db.SaveChanges();
             
-            return RedirectToAction("OpenFolder", "Main", new {userId = userId, folderId = currentFolder?.FolderId});
+            return RedirectToAction("OpenFolder", "Main", new {folderId = currentFolder?.FolderId});
         }
 
-        [ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult RenameFolder(int? userId, int? currentFolderId, string newFolderName)
+        public ActionResult RenameFolder(int? currentFolderId, string newFolderName)
         {
             if (string.IsNullOrWhiteSpace(newFolderName)) return View("Error");
 
-            if (userId == null) return View("Error");
-            UserAccount ua = db.UserAccounts.Find(userId);
-            if (ua == null) return View("Error");
+            // if (userId == null) return View("Error");
+            //UserAccount ua = db.UserAccounts.Find(Session["user"]);
+            //if (ua == null) return View("Error");
 
             if (currentFolderId == null) return View("Error");
-            Folder currentFolder = db.Folders.Find(currentFolderId);
-            if (currentFolder == null || currentFolder.OwnerUserAccount != ua) return View("Error");
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
+			Folder currentFolder = db.Folders.Find(currentFolderId);
+			if (currentFolder == null || currentFolder.OwnerUserAccount != ua) return View("Error");
 
             currentFolder.Name = newFolderName;
             currentFolder.DateModified = DateTime.Now;
             //db.Entry(currentFolder).State = EntityState.Modified;
             db.SaveChanges();
 
-            return RedirectToAction("OpenFolder", "Main", new {userId = userId, folderId = currentFolder.FolderId});
+            return RedirectToAction("OpenFolder", "Main", new {folderId = currentFolder.FolderId});
         }
 
-        [ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult DeleteFolder(int? userId, int? currentFolderId, bool? confirmFolderDelete)
+        public ActionResult DeleteFolder(int? currentFolderId, bool? confirmFolderDelete)
         {
             if (confirmFolderDelete == null) // user did not confirm folder delete
             {
-                return RedirectToAction("OpenFolder", "Main", new {userId = userId, folderId = currentFolderId});
+                return RedirectToAction("OpenFolder", "Main", new {folderId = currentFolderId});
             }
 
-            if (userId == null) return View("Error");
-            UserAccount ua = db.UserAccounts.Find(userId);
-            if (ua == null) return View("Error");
+            //if (userId == null) return View("Error");
+            //UserAccount ua = db.UserAccounts.Find(userId);
+            //if (ua == null) return View("Error");
 
             if (currentFolderId == null) return View("Error");
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
             Folder currentFolder = db.Folders.Find(currentFolderId);
-            if (currentFolder == null || currentFolder.OwnerUserAccount != ua) return View("Error");
+			if (currentFolder == null || currentFolder.OwnerUserAccount != ua) return View("Error");
 
             Folder parentFolder = currentFolder.ParentFolder;
 
             // remove all files in a folder
-            List<File> fileList = (from item in db.Files.ToList()
-                where item.ParentFolder == currentFolder && item.OwnerUserAccount.UserAccountId == userId
-                select item).ToList();
-            List<FileContent> fileContentList = (from item in db.FileContents.ToList()
-                where fileList.Select(x => x.Content).Contains(item)
-                select item).ToList();
+            List<File> fileList = (db.Files.ToList().Where(item => item.ParentFolder == currentFolder && item.OwnerUserAccount == ua)).ToList();
+            List<FileContent> fileContentList = (db.FileContents.ToList().Where(item => fileList.Select(x => x.Content).Contains(item))).ToList();
 
             db.Files.RemoveRange(fileList);
             db.FileContents.RemoveRange(fileContentList);
             db.Folders.Remove(currentFolder); // delete folder
             db.SaveChanges();
 
-            return RedirectToAction("OpenFolder", "Main", new {userId = userId, folderId = parentFolder?.FolderId});
+            return RedirectToAction("OpenFolder", "Main", new {folderId = parentFolder?.FolderId});
         }
 
-        [ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult UploadFile(int? userId, int? currentFolderId, string newFileName, HttpPostedFileBase file)
+        public ActionResult UploadFile(int? currentFolderId, string newFileName, HttpPostedFileBase file)
         {
             
             if (string.IsNullOrWhiteSpace(newFileName) ||
@@ -165,11 +163,12 @@ namespace OnlineFileSystem.Controllers
             byte[] fileData = target.ToArray();
 
 
-            if (userId == null) return View("Error");
-            UserAccount ua = db.UserAccounts.Find(userId);
-            if (ua == null) return View("Error");
+			//if (userId == null) return View("Error");
+			//UserAccount ua = db.UserAccounts.Find(userId);
+			//if (ua == null) return View("Error");
 
-            Folder currentFolder = null;
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
+			Folder currentFolder = null;
             if (currentFolderId != null)
             {
                 currentFolder = db.Folders.Find(currentFolderId);
@@ -207,17 +206,18 @@ namespace OnlineFileSystem.Controllers
             db.Files.Add(f);
             db.SaveChanges();
 
-            return RedirectToAction("OpenFolder", "Main", new { userId = userId, folderId = currentFolder?.FolderId });
+            return RedirectToAction("OpenFolder", "Main", new {folderId = currentFolder?.FolderId });
         }
 
-        public ActionResult DownloadFile(int? userId, int? fileId)
+		public ActionResult DownloadFile(int? fileId)
         {
-            if (userId == null) return View("Error");
-            UserAccount ua = db.UserAccounts.Find(userId);
-            if (ua == null) return View("Error");
+            //if (userId == null) return View("Error");
+            //UserAccount ua = db.UserAccounts.Find(userId);
+            //if (ua == null) return View("Error");
 
             if (fileId == null) return View("Error");
-            File f = db.Files.Find(fileId);
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
+			File f = db.Files.Find(fileId);
             if (f == null || f.OwnerUserAccount != ua) return View("Error");
 
 			db.Entry(f).Reference(c => c.Content).Load();
@@ -231,13 +231,14 @@ namespace OnlineFileSystem.Controllers
             return File(fc.Data, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
-        public ActionResult DeleteFile(int? userId, int? currentFolderId, int? fileId)
+		public ActionResult DeleteFile(int? currentFolderId, int? fileId)
         {
-            if (userId == null) return View("Error");
-            UserAccount ua = db.UserAccounts.Find(userId);
-            if (ua == null) return View("Error");
+			//if (userId == null) return View("Error");
+			//UserAccount ua = db.UserAccounts.Find(userId);
+			//if (ua == null) return View("Error");
 
-            Folder currentFolder = null;
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
+			Folder currentFolder = null;
             if (currentFolderId != null)
             {
                 currentFolder = db.Folders.Find(currentFolderId);
@@ -257,16 +258,17 @@ namespace OnlineFileSystem.Controllers
             db.FileContents.Remove(fc);
             db.SaveChanges();
 
-            return RedirectToAction("OpenFolder", "Main", new { userId = userId, folderId = currentFolder?.FolderId });
+            return RedirectToAction("OpenFolder", "Main", new {folderId = currentFolder?.FolderId });
         }
 
-        public ActionResult ShareFile(int? userId, int? currentFolderId, int? fileId)
+		public ActionResult ShareFile(int? currentFolderId, int? fileId)
         {
-            if (userId == null) return View("Error");
-            UserAccount ua = db.UserAccounts.Find(userId);
-            if (ua == null) return View("Error");
+			//if (userId == null) return View("Error");
+			//UserAccount ua = db.UserAccounts.Find(userId);
+			//if (ua == null) return View("Error");
 
-            Folder currentFolder = null;
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
+			Folder currentFolder = null;
             if (currentFolderId != null)
             {
                 currentFolder = db.Folders.Find(currentFolderId);
@@ -281,15 +283,17 @@ namespace OnlineFileSystem.Controllers
 			f.Sharing = 1;
             db.SaveChanges();
 
-            return RedirectToAction("OpenFolder", "Main", new { userId = userId, folderId = currentFolder?.FolderId });
+            return RedirectToAction("OpenFolder", "Main", new {folderId = currentFolder?.FolderId });
         }
 
-		public ActionResult StopShareFile(int? userId, int? currentFolderId, int? fileId)
-		{
-			if (userId == null) return View("Error");
-			UserAccount ua = db.UserAccounts.Find(userId);
-			if (ua == null) return View("Error");
 
+		public ActionResult StopShareFile(int? currentFolderId, int? fileId)
+		{
+			//if (userId == null) return View("Error");
+			//UserAccount ua = db.UserAccounts.Find(userId);
+			//if (ua == null) return View("Error");
+
+			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
 			Folder currentFolder = null;
 			if (currentFolderId != null)
 			{
@@ -305,14 +309,14 @@ namespace OnlineFileSystem.Controllers
 			f.Sharing = 0;
 			db.SaveChanges();
 
-			return RedirectToAction("OpenFolder", "Main", new { userId = userId, folderId = currentFolder?.FolderId });
+			return RedirectToAction("OpenFolder", "Main", new {folderId = currentFolder?.FolderId });
 		}
 
-	    public ActionResult DownloadSharedFile(string url)
+		[AllowAnonymous]
+		public ActionResult DownloadSharedFile(string url)
 	    {
 			if(url == null) return View("Error");
-			File f;
-			f = db.Files.FirstOrDefault(s => s.Link == url);
+			File f = db.Files.FirstOrDefault(s => s.Link == url);
 			if (f == null || f.Sharing == 0) return View("Error");
 
 			db.Entry(f).Reference(c => c.Content).Load();

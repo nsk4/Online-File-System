@@ -1,0 +1,85 @@
+﻿<!-- Login popup -->
+<div class="modal fade" id="loginPopup" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content col-xs-6">
+			<div class="modal-body">
+				@using (Html.BeginForm("Login", "Front", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
+				{
+					@Html.AntiForgeryToken()
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="text" class="form-control col-xs-5" id="username" name="username" placeholder="Enter username" />
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control col-xs-5" id="password" name="password" placeholder="Enter password" />
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Login</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Register popup -->
+<div class="modal fade" id="registerPopup" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content col-xs-6">
+			<div class="modal-body">
+				@using (Html.BeginForm("Register", "Front", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
+				{
+					@Html.AntiForgeryToken()
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="text" class="form-control col-xs-5" id="username" name="username" placeholder="Enter username" />
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control col-xs-5" id="password" name="password" placeholder="Enter password" />
+					</div>
+					<div class="form-group">
+						<label for="passwordRepeat">Repeat Password</label>
+						<input type="password" class="form-control col-xs-5" id="passwordRepeat" name="passwordRepeat" placeholder="Repeat password" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" class="form-control col-xs-5" id="email" name="email" placeholder="Enter email" />
+					</div>
+					<div class="form-group">
+						<label for="emailRepeat">Repeat Email</label>
+						<input type="email" class="form-control col-xs-5" id="emailRepeat" name="emailRepeat" placeholder="Repeat email" />
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Register</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Forgot password popup -->
+<div class="modal fade" id="forgotPasswordPopup" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content col-xs-6">
+			<div class="modal-body">
+				@using (Html.BeginForm("ForgotPassword", "Front", FormMethod.Post, new { @class = "form-inline", @role = "form" }))
+				{
+					@Html.AntiForgeryToken()
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" class="form-control col-xs-5" id="email" name="email" placeholder="Enter email" />
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Reset password</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>

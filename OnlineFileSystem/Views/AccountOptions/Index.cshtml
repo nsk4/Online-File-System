@@ -12,15 +12,7 @@
 		currentFolder = ViewBag.currentFolder;
 	}
 	*/
-
-	int UserAccountId = ViewBag.UserAccountId;
-	string Username = ViewBag.Username;
-	string Email = ViewBag.Email;
-	DateTime DateModified = ViewBag.DateModified;
-	DateTime DateCreated = ViewBag.DateCreated;
-	DateTime LastLogin = ViewBag.LastLogin;
-	int Role = ViewBag.Role;
-
+	UserAccount ua = (UserAccount)Session["user"];
 }
 
 <p></p>
@@ -28,11 +20,11 @@
 
 <div class="container-fluid">
 	
-	@if (@Role == (int)Utility.AccountType.Unconfirmed)
+	@if (@ua.Role == (int)Utility.AccountType.Unconfirmed)
 	{
 		<div class="row">
 			<div>
-				@Html.ActionLink("Resend confirmation email", "SendActivationEmail", "AccountOptions", new { userId = UserAccountId }, new { @class = "btn btn-default", @type = "button" })
+				@Html.ActionLink("Resend confirmation email", "SendActivationEmail", "AccountOptions", null, new { @class = "btn btn-default", @type = "button" })
 			</div>
 		</div>
 	}
@@ -44,7 +36,7 @@
 					Username:
 				</dt>
 				<dd>
-					@Username
+					@ua.Username
 				</dd>
 				<dt>
 					Password:
@@ -56,31 +48,31 @@
 					Email:
 				</dt>
 				<dd>
-					@Email
+					@ua.Email
 				</dd>
 				<dt>
 					Role:
 				</dt>
 				<dd>
-					@Utility.IntToAccountType(Role)
+					@Utility.IntToAccountType(ua.Role)
 				</dd>
 				<dt>
 					Date Created:
 				</dt>
 				<dd>
-					@DateCreated
+					@ua.DateCreated
 				</dd>
 				<dt>
 					Date Modified:
 				</dt>
 				<dd>
-					@DateModified
+					@ua.DateModified
 				</dd>
 				<dt>
 					Last Login:
 				</dt>
 				<dd>
-					@LastLogin
+					@ua.LastLogin
 				</dd>
 
 				<dt>
@@ -114,7 +106,6 @@
 						<label for="newPasswordRepeat">Folder name</label>
 						<input type="text" class="form-control" id="newPasswordRepeat" name="newPasswordRepeat" placeholder="Repeat new password" />
 					</div>
-					<input type="hidden" name="userId" value="@UserAccountId" />
 
 					<button type="submit" class="btn btn-primary">Change</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

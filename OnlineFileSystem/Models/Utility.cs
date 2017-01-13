@@ -34,6 +34,7 @@ namespace OnlineFileSystem.Models
 
 		public static bool SendConfirmationEmail(string email, string confirmationUrl)
 		{
+			return true;
 			throw new Exception("Configure USERNAME and PASSWORD for EMAIL");
 			string username = "USERNAME";
 			string password = "PASSWORD";
@@ -60,6 +61,7 @@ namespace OnlineFileSystem.Models
 
 		public static bool SendPasswordResetEmail(string email, string newPassword)
 		{
+			return true;
 			throw new Exception("Configure USERNAME and PASSWORD for EMAIL");
 			string username = "USERNAME";
 			string password = "PASSWORD";

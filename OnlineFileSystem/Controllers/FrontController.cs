@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using OnlineFileSystem.Models;
 
 namespace OnlineFileSystem.Controllers
@@ -11,49 +12,35 @@ namespace OnlineFileSystem.Controllers
     {
 		private ApplicationDbContext db = new ApplicationDbContext();
 
-
-		// GET: Front
-		public ActionResult Index()
-        {
-            return View();
-        }
-
-
-	    public ActionResult Login()
-	    {
-		    return View("Login");
-	    }
-
+		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Login(string username, string password)
 		{
 			// TODO: change function signature
-			if (username == null || password == null) RedirectToAction("Login");
+			if (username.IsNullOrWhiteSpace() || password.IsNullOrWhiteSpace()) return RedirectToAction("Index", "Home");
 
 			UserAccount ua = db.UserAccounts.FirstOrDefault(u => u.Username == username);
-			if (ua == null || ua.Password != Utility.HashPassword(password, ua.PasswordSalt)) return View("Login");
+			if (ua == null || ua.Password != Utility.HashPassword(password, ua.PasswordSalt)) return RedirectToAction("Index", "Home");
 
 			ua.LastLogin = DateTime.Now;
 			db.SaveChanges();
 
 			// TODO: logged in
-
-			return View("Login");
+			Session["user"] = ua;
+			
+			return RedirectToAction("OpenFolder", "Main");
 		}
 
-		public ActionResult Register()
-	    {
-		    return View("Register");
-	    }
-
+		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Register(string username, string password, string passwordRepeat, string email, string emailRepeat)
 		{
 			// TODO: change function signature
-			if (username == null || password == null || passwordRepeat == null || email == null || emailRepeat == null || password != passwordRepeat || email != emailRepeat) RedirectToAction("Register");
-
-			int numOfAccounts = db.UserAccounts.Select(s => s.Username == username).Count();
-			if (numOfAccounts != 0) RedirectToAction("Register");
-			int numOfEmails = db.UserAccounts.Select(s => s.Email == email).Count();
-			if (numOfEmails != 0) RedirectToAction("Register");
+			if (username.IsNullOrWhiteSpace() || password.IsNullOrWhiteSpace() || passwordRepeat.IsNullOrWhiteSpace() || email.IsNullOrWhiteSpace() || emailRepeat.IsNullOrWhiteSpace() || password != passwordRepeat || email != emailRepeat) return RedirectToAction("Index", "Home");
+			int numOfAccounts = db.UserAccounts.Count(s => s.Username == username);
+			if (numOfAccounts != 0) return RedirectToAction("Index", "Home");
+			int numOfEmails = db.UserAccounts.Count(s => s.Email == email);
+			if (numOfEmails != 0) return RedirectToAction("Index", "Home");
 
 			string link = null;
 			do
@@ -75,28 +62,31 @@ namespace OnlineFileSystem.Controllers
 			db.UserAccounts.Add(newUser);
 			db.SaveChanges();
 
-			return View("Login");
+			return RedirectToAction("Index", "Home");
 		}
 
-		public ActionResult ForgotPassword()
-	    {
-			return View("ForgotPassword");
-		}
-
-	    public ActionResult ForgotPassword(string email)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult ForgotPassword(string email)
 	    {
 			// TODO: change function signature
-			if (email == null) RedirectToAction("ForgotPassword");
+			if (email.IsNullOrWhiteSpace()) return RedirectToAction("Index", "Home");
 			UserAccount ua = db.UserAccounts.FirstOrDefault(u => u.Email == email);
-		    if (ua == null) RedirectToAction("ForgotPassword");
+		    if (ua == null) return RedirectToAction("Index", "Home");
 
-		    string password = Utility.GenerateRandomString();
+			string password = Utility.GenerateRandomString();
 		    if (!Utility.SendPasswordResetEmail(email, password)) return View("Error");
 			ua.Password = Utility.HashPassword(password, ua.PasswordSalt);
 			ua.DateModified = DateTime.Now;
 		    db.SaveChanges();
+			
+		    return RedirectToAction("Index", "Home");
+		}
 
-		    return View("Login");
+	    public ActionResult Logout()
+	    {
+			Session.RemoveAll();
+			return RedirectToAction("Index", "Home");
 	    }
     }
 }

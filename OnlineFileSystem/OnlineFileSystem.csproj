@@ -199,13 +199,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountOptionsController.cs" />
-    <Compile Include="Controllers\FoldersController.cs" />
     <Compile Include="Controllers\FrontController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\Old\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Old\ManageController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -214,6 +212,7 @@
       <DependentUpon>201701080516020_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AuthorizationFilter.cs" />
     <Compile Include="Models\Old\AccountViewModels.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FileContent.cs" />
@@ -233,6 +232,7 @@
     <Content Include="Command To Run.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\cute-panda-pictures.jpg" />
     <Content Include="Content\Images\DeleteIcon.png" />
     <Content Include="Content\Images\DownloadIcon.png" />
     <Content Include="Content\Images\FileIcon.png" />
@@ -331,18 +331,15 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
-    <Content Include="Views\Test\MyView.cshtml" />
     <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\Folders\Create.cshtml" />
     <Content Include="Views\Folders\Delete.cshtml" />
     <Content Include="Views\Folders\Details.cshtml" />
     <Content Include="Views\Folders\Edit.cshtml" />
     <Content Include="Views\Folders\Index.cshtml" />
-    <Content Include="Views\Main\TestView.cshtml" />
     <Content Include="Views\AccountOptions\Index.cshtml" />
-    <Content Include="Views\Front\Login.cshtml" />
-    <Content Include="Views\Front\Register.cshtml" />
-    <Content Include="Views\Front\ForgotPassword.cshtml" />
+    <Content Include="Views\Front\Index.cshtml" />
+    <Content Include="Views\Shared\_Popups.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -3,17 +3,9 @@
 @using Microsoft.Ajax.Utilities
 @using OnlineFileSystem.Models
 @{
-    //ViewBag.Title = "11111";
-    List<Folder> folderList = (List<Folder>)ViewBag.folderList;
-    List<OnlineFileSystem.Models.File> fileList = (List<OnlineFileSystem.Models.File>)ViewBag.fileList;
-    int? userId = ViewBag.userId;
-
-    Folder currentFolder = null;
-    if (ViewBag.currentFolder != null)
-    {
-        currentFolder = ViewBag.currentFolder;
-    }
-
+	List<Folder> folderList = (List<Folder>)ViewBag.folderList;
+	List<OnlineFileSystem.Models.File> fileList = (List<OnlineFileSystem.Models.File>)ViewBag.fileList;
+	Folder currentFolder = ViewBag?.currentFolder;
 }
 
 <p></p>
@@ -21,15 +13,15 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="h3">
-                @if (currentFolder != null && currentFolder.ParentFolder != null) // folder has parent
+                @if (currentFolder?.ParentFolder != null) // folder has parent
                 {
-                    @Html.ActionLink("Up", "OpenFolder", "Main", new { userId = userId, folderId = currentFolder.ParentFolder.FolderId }, new { @class = "btn btn-default", @type = "button" })
+                    @Html.ActionLink("Up", "OpenFolder", "Main", new { folderId = currentFolder.ParentFolder.FolderId }, new { @class = "btn btn-default", @type = "button" })
                     @currentFolder.Name
                     
                 }
                 else if(currentFolder != null && currentFolder.ParentFolder == null) // parent is root
                 {
-                    @Html.ActionLink("Up", "OpenFolder", "Main", new {userId = userId}, new {@class = "btn btn-default", @type = "button"})
+                    @Html.ActionLink("Up", "OpenFolder", "Main", null, new {@class = "btn btn-default", @type = "button"})
                     @currentFolder.Name
                 }
                 else // root folder
@@ -82,7 +74,7 @@
                 {
                     <tr>
                         <td><img src="@Url.Content("~/Content/Images/FolderIcon.png")" title="Folder" class="smallRowImage"/></td>
-                        <td>@Html.ActionLink(item.Name, "OpenFolder", "Main", new {userId = userId, folderId = item.FolderId}, null)</td>
+                        <td>@Html.ActionLink(item.Name, "OpenFolder", "Main", new { folderId = item.FolderId}, null)</td>
                         <td>@item.DateCreated</td>
                         <td>@item.DateModified</td>
                         <td>/</td>
@@ -109,42 +101,35 @@
 								{
 									@Html.Raw("no");
 								}
-
-
 						</td>
                         <td>@item.Size</td>
                         <td>
                             <ul class="list-inline list-unstyled">
                                 <li>
-                                    <a href="@Url.Action("DownloadFile", "Main", new { userId = userId, currentFolderId = currentFolder?.FolderId, fileId = item.FileId })">
+                                    <a href="@Url.Action("DownloadFile", "Main", new { currentFolderId = currentFolder?.FolderId, fileId = item.FileId })">
                                         <img src="@Url.Content("~/Content/Images/DownloadIcon.png")" title="Download" class="smallRowImage" />
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("DeleteFile", "Main", new { userId = userId, fileId = item.FileId })">
+                                    <a href="@Url.Action("DeleteFile", "Main", new { fileId = item.FileId })">
                                         <img src="@Url.Content("~/Content/Images/DeleteIcon.png")" title="Delete" class="smallRowImage" />
                                     </a>
                                 </li>
 	                            <li>
 		                            @if (item.Sharing == 0)
 									{
-										<a href="@Url.Action("ShareFile", "Main", new {userId = userId, currentFolderId = currentFolder?.FolderId, fileId = item.FileId})">
+										<a href="@Url.Action("ShareFile", "Main", new { currentFolderId = currentFolder?.FolderId, fileId = item.FileId})">
 											<img src="@Url.Content("~/Content/Images/ShareIcon.png")" title="Share" class="smallRowImage" />
 										</a>
 									}
 									else
 									{
-										<a href="@Url.Action("StopShareFile", "Main", new {userId = userId, currentFolderId = currentFolder?.FolderId, fileId = item.FileId})">
+										<a href="@Url.Action("StopShareFile", "Main", new { currentFolderId = currentFolder?.FolderId, fileId = item.FileId})">
 											<img src="@Url.Content("~/Content/Images/ShareIconCancel.png")" title="Share" class="smallRowImage" />
 										</a>
 									}
-
-		                            
 	                            </li>
                             </ul>
-                            
-                            
-                            
                         </td>
                     </tr>
                 }
@@ -152,16 +137,6 @@
             </table>
         </div>
     </div>
-    
-    
-    
-
-    <div class="row">
-        placeholder
-    </div>
-    
-    
-
 </div>
 
 
@@ -177,7 +152,6 @@
                         <!--<label for="newFolderName">Folder name</label>-->
                         <input type="text" class="form-control" id="newFolderName" name="newFolderName" placeholder="Enter folder name" />
                     </div>
-                    <input type="hidden" name="userId" value="@userId" />
                     <input type="hidden" name="currentFolderId" value="@if (currentFolder == null) { @Html.Raw("") } else { @currentFolder.FolderId  }" />
                     <button type="submit" class="btn btn-primary">Create</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -200,7 +174,6 @@
                         <!--<label for="newFolderName">Folder name</label>-->
                         <input type="text" class="form-control" id="newFolderName" name="newFolderName" placeholder="Enter folder name" />
                     </div>
-                    <input type="hidden" name="userId" value="@userId" />
                     <input type="hidden" name="currentFolderId" value="@if (currentFolder == null) { @Html.Raw("")  } else { @currentFolder.FolderId }" />
                     <button type="submit" class="btn btn-primary">Rename</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -224,7 +197,6 @@
                         <label for="confirmFolderDelete">Really delete folder and all its files?</label>
                         <input type="checkbox"  id="confirmFolderDelete" name="confirmFolderDelete" value="true" />
                     </div>
-                    <input type="hidden" name="userId" value="@userId" />
                     <input type="hidden" name="currentFolderId" value="@if (currentFolder == null) { @Html.Raw("") } else { @currentFolder.FolderId }" />
                     <button type="submit" class="btn btn-primary">Delete</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -249,7 +221,6 @@
                         <input type="file" id="file" name="file" />
 
                     </div>
-                    <input type="hidden" name="userId" value="@userId" />
                     <input type="hidden" name="currentFolderId" value="@if (currentFolder == null) { @Html.Raw("") } else { @currentFolder.FolderId }" />
                     <button type="submit" class="btn btn-primary">Upload</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
