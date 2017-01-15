@@ -601,5 +601,72 @@
             Default method that returns front page
             </summary>
         </member>
+        <member name="T:OnlineFileSystem.Models.Utility">
+            <summary>
+            Helper class that includes shared functions from different classes
+            </summary>
+        </member>
+        <member name="M:OnlineFileSystem.Models.Utility.HashPassword(System.String,System.String)">
+            <summary>
+            Hashes password with salt and converts it to Base64
+            </summary>
+            <param name="password"></param>
+            <param name="salt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OnlineFileSystem.Models.Utility.GenerateRandomString(System.Int32)">
+            <summary>
+            Generates random string to be used as salt
+            </summary>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OnlineFileSystem.Models.Utility.SendConfirmationEmail(System.String,System.String)">
+            <summary>
+            Sends an email to the user with link to confirm their account
+            </summary>
+            <param name="email"></param>
+            <param name="confirmationUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OnlineFileSystem.Models.Utility.SendPasswordResetEmail(System.String,System.String)">
+            <summary>
+            Sends an email to the user with new temporary password
+            </summary>
+            <param name="email"></param>
+            <param name="newPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OnlineFileSystem.Models.Utility.AccountType">
+            <summary>
+            Account type based on values from database
+            </summary>
+        </member>
+        <member name="M:OnlineFileSystem.Models.Utility.IntToAccountType(System.Int32)">
+            <summary>
+            Converts account type from integer to account type
+            </summary>
+            <param name="type">Integer value of AccountType</param>
+            <returns></returns>
+        </member>
+        <member name="M:OnlineFileSystem.Models.Utility.AccountTypeToInt(OnlineFileSystem.Models.Utility.AccountType)">
+            <summary>
+            Converts account type from AccountType to int
+            </summary>
+            <param name="type">AccountType to convert</param>
+            <returns></returns>
+        </member>
+        <member name="T:OnlineFileSystem.Models.Utility.ErrorType">
+            <summary>
+            List of possible custom errors
+            </summary>
+        </member>
+        <member name="M:OnlineFileSystem.Models.Utility.GetErrorMessage(OnlineFileSystem.Models.Utility.ErrorType)">
+            <summary>
+            Generates error message for given error
+            </summary>
+            <param name="et">Error type of error</param>
+            <returns>Error message string</returns>
+        </member>
     </members>
 </doc>
