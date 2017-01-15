@@ -2,150 +2,146 @@ using OnlineFileSystem.Models;
 
 namespace OnlineFileSystem.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+	using System;
+	using System.Data.Entity;
+	using System.Data.Entity.Migrations;
+	using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<OnlineFileSystem.Models.ApplicationDbContext>
-    {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = false;
-        }
+	internal sealed class Configuration : DbMigrationsConfiguration<OnlineFileSystem.Models.ApplicationDbContext>
+	{
+		public Configuration()
+		{
+			AutomaticMigrationsEnabled = false;
+		}
 
-        protected override void Seed(OnlineFileSystem.Models.ApplicationDbContext context)
-        {
-            //  This method will be called after migrating to the latest version.
+		protected override void Seed(OnlineFileSystem.Models.ApplicationDbContext context)
+		{
+			//  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
-
-            
-			
-            FileContent fileC1 = new FileContent();
-            fileC1.Data = new byte[] {8, 4, 5, 5};
-            FileContent fileC2 = new FileContent();
-            fileC2.Data = new byte[] {8, 4, 5, 5};
-            FileContent fileC3 = new FileContent();
-            fileC3.Data = new byte[] {3, 4, 9, 1};
-            FileContent fileC4 = new FileContent();
-            fileC4.Data = new byte[] { 1, 1 };
+			//  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+			//  to avoid creating duplicate seed data. E.g.
+			//
+			//    context.People.AddOrUpdate(
+			//      p => p.FullName,
+			//      new Person { FullName = "Andrew Peters" },
+			//      new Person { FullName = "Brice Lambson" },
+			//      new Person { FullName = "Rowan Miller" }
+			//    );
+			//
 
 
 
 
-            UserAccount user1 = new UserAccount();
-            user1.Username = "TestUser1";
-            user1.Password = "test";
-            user1.PasswordSalt = "nippon";
-            user1.Email = "nejcsk@hotmail.com";
-            user1.Role = 0;
-	        user1.Confirmationlink = "fgwergreeervevrev";
-            user1.DateCreated = new DateTime(2014, 10, 20);
-            user1.DateModified = new DateTime(2014, 10, 20);
-            user1.LastLogin = new DateTime(2015, 11, 21);
+			FileContent fileC1 = new FileContent();
+			fileC1.Data = new byte[] { 8, 4, 5, 5 };
+			FileContent fileC2 = new FileContent();
+			fileC2.Data = new byte[] { 8, 4, 5, 5 };
+			FileContent fileC3 = new FileContent();
+			fileC3.Data = new byte[] { 3, 4, 9, 1 };
+			FileContent fileC4 = new FileContent();
+			fileC4.Data = new byte[] { 1, 1 };
 
-            UserAccount user2 = new UserAccount();
-            user2.Username = "TestUser2";
-            user2.Password = "test";
-            user2.PasswordSalt = "nippon";
-            user2.Email = "s.k.nejc@gmail.com";
-            user2.Role = 1;
+			UserAccount user1 = new UserAccount();
+			user1.Username = "nsk";
+			user1.PasswordSalt = "nippon";
+			user1.Password = Utility.HashPassword("QWEqwe123", user1.PasswordSalt);
+			user1.Email = "nejcsk@hotmail.com";
+			user1.Role = 0;
+			user1.Confirmationlink = "fgwergreeervevrev";
+			user1.DateCreated = new DateTime(2014, 10, 20);
+			user1.DateModified = new DateTime(2014, 10, 20);
+			user1.LastLogin = new DateTime(2015, 11, 21);
+
+			UserAccount user2 = new UserAccount();
+			user2.Username = "nejc";
+			user2.PasswordSalt = "nihon";
+			user2.Password = Utility.HashPassword("123qweQWE", user2.PasswordSalt);
+			user2.Email = "s.k.nejc@gmail.com";
+			user2.Role = 1;
 			user2.Confirmationlink = "cerveipoviervr";
 			user2.DateCreated = new DateTime(2015, 10, 20);
-            user2.DateModified = new DateTime(2015, 10, 20);
-            user2.LastLogin = new DateTime(2015, 11, 21);
+			user2.DateModified = new DateTime(2015, 10, 20);
+			user2.LastLogin = new DateTime(2015, 11, 21);
+
+			Folder folder1 = new Folder();
+			folder1.Name = "folder1";
+			folder1.DateCreated = new DateTime(2015, 12, 20);
+			folder1.DateModified = new DateTime(2016, 12, 20);
+			folder1.OwnerUserAccount = user1;
+
+			Folder folder2 = new Folder();
+			folder2.Name = "folder2";
+			folder2.DateCreated = new DateTime(2015, 12, 21);
+			folder2.DateModified = new DateTime(2016, 12, 22);
+			folder2.OwnerUserAccount = user2;
+
+			Folder folder3 = new Folder();
+			folder3.Name = "folder3";
+			folder3.DateCreated = new DateTime(2015, 12, 23);
+			folder3.DateModified = new DateTime(2016, 12, 24);
+			folder3.ParentFolder = folder1;
+			folder3.OwnerUserAccount = user1;
 
 
-            Folder folder1 = new Folder();
-            folder1.Name = "folder1";
-            folder1.DateCreated = new DateTime(2015, 12, 20);
-            folder1.DateModified = new DateTime(2016, 12, 20);
-            folder1.OwnerUserAccount = user1;
 
-            Folder folder2 = new Folder();
-            folder2.Name = "folder2";
-            folder2.DateCreated = new DateTime(2015, 12, 21);
-            folder2.DateModified = new DateTime(2016, 12, 22);
-            folder2.OwnerUserAccount = user2;
+			File file1 = new File();
+			file1.Name = "test1.txt";
+			file1.Sharing = 1;
+			file1.Link = "123214234324";
+			file1.FileType = "txt";
+			file1.Size = 3000;
+			file1.DateCreated = new DateTime(2016, 12, 10);
+			file1.DateModified = new DateTime(2016, 12, 10);
+			file1.Content = fileC1;
+			file1.ParentFolder = folder1;
+			file1.OwnerUserAccount = file1.ParentFolder.OwnerUserAccount;
 
-            Folder folder3 = new Folder();
-            folder3.Name = "folder3";
-            folder3.DateCreated = new DateTime(2015, 12, 23);
-            folder3.DateModified = new DateTime(2016, 12, 24);
-            folder3.ParentFolder = folder1;
-            folder3.OwnerUserAccount = user1;
+			File file2 = new File();
+			file2.Name = "test2.jpg";
+			file2.Sharing = 0;
+			file2.FileType = "jpg";
+			file2.Size = 552384000;
+			file2.DateCreated = new DateTime(2016, 12, 10);
+			file2.DateModified = new DateTime(2016, 12, 11);
+			file2.Content = fileC2;
+			file2.ParentFolder = folder1;
+			file2.OwnerUserAccount = file2.ParentFolder.OwnerUserAccount;
 
+			File file3 = new File();
+			file3.Name = "test3";
+			file3.Sharing = 0;
+			file3.FileType = "/";
+			file3.Link = "23432234";
+			file3.Size = 552384000;
+			file3.DateCreated = new DateTime(2016, 12, 9);
+			file3.DateModified = new DateTime(2016, 12, 10);
+			file3.Content = fileC3;
+			file3.ParentFolder = folder2;
+			file3.OwnerUserAccount = file3.ParentFolder.OwnerUserAccount;
 
+			File file4 = new File();
+			file4.Name = "test4";
+			file4.Sharing = 0;
+			file4.FileType = "/";
+			file4.Link = "23432234";
+			file4.Size = 552384000;
+			file4.DateCreated = new DateTime(2016, 12, 9);
+			file4.DateModified = new DateTime(2016, 12, 10);
+			file4.Content = fileC4;
+			file4.OwnerUserAccount = user1;
 
-            File file1 = new File();
-            file1.Name = "test1.txt";
-            file1.Sharing = 1;
-            file1.Link = "123214234324";
-            file1.FileType = "txt";
-            file1.Size = 3000;
-            file1.DateCreated = new DateTime(2016, 12, 10);
-            file1.DateModified = new DateTime(2016, 12, 10);
-            file1.Content = fileC1;
-            file1.ParentFolder = folder1;
-            file1.OwnerUserAccount = file1.ParentFolder.OwnerUserAccount;
-
-            File file2 = new File();
-            file2.Name = "test2.jpg";
-            file2.Sharing = 0;
-            file2.FileType = "jpg";
-            file2.Size = 552384000;
-            file2.DateCreated = new DateTime(2016, 12, 10);
-            file2.DateModified = new DateTime(2016, 12, 11);
-            file2.Content = fileC2;
-            file2.ParentFolder = folder1;
-            file2.OwnerUserAccount = file2.ParentFolder.OwnerUserAccount;
-
-            File file3 = new File();
-            file3.Name = "test3";
-            file3.Sharing = 0;
-            file3.FileType = "/";
-            file3.Link = "23432234";
-            file3.Size = 552384000;
-            file3.DateCreated = new DateTime(2016, 12, 9);
-            file3.DateModified = new DateTime(2016, 12, 10);
-            file3.Content = fileC3;
-            file3.ParentFolder = folder2;
-            file3.OwnerUserAccount = file3.ParentFolder.OwnerUserAccount;
-
-            File file4 = new File();
-            file4.Name = "test4";
-            file4.Sharing = 0;
-            file4.FileType = "/";
-            file4.Link = "23432234";
-            file4.Size = 552384000;
-            file4.DateCreated = new DateTime(2016, 12, 9);
-            file4.DateModified = new DateTime(2016, 12, 10);
-            file4.Content = fileC4;
-            file4.OwnerUserAccount = user1;
-
-            context.UserAccounts.AddOrUpdate(user1, user2);
-            context.Folders.AddOrUpdate(folder1, folder2, folder3);
-            context.FileContents.AddOrUpdate(fileC1, fileC2, fileC3, fileC4);
-            context.Files.AddOrUpdate(file1, file2, file3, file4);
-            
-            
+			context.UserAccounts.AddOrUpdate(user1, user2);
+			context.Folders.AddOrUpdate(folder1, folder2, folder3);
+			context.FileContents.AddOrUpdate(fileC1, fileC2, fileC3, fileC4);
+			context.Files.AddOrUpdate(file1, file2, file3, file4);
 
 
-            
 
 
-            /*
+
+
+
+			/*
             // Init of user roles
             context.UserRoles.AddOrUpdate(p => p.UserRoleId,
                 new UserRole
@@ -265,6 +261,6 @@ namespace OnlineFileSystem.Migrations
                 }
             );
             */
-        }
-    }
+		}
+	}
 }

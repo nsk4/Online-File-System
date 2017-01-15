@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <ApplicationInsightsResourceId>/subscriptions/b4da94e1-d34a-4f7e-a654-c5ac25c12c26/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/OnlineFileSystem</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/b4da94e1-d34a-4f7e-a654-c5ac25c12c26/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/OnlineFileSystem</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,6 +50,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -90,6 +95,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Moq, Version=4.5.30.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.5.30\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -252,25 +261,25 @@
     <Compile Include="Controllers\AccountOptionsController.cs" />
     <Compile Include="Controllers\FrontController.cs" />
     <Compile Include="Controllers\MainController.cs" />
-    <Compile Include="Controllers\Old\AccountController.cs" />
+    <Compile Include="Migrations\201701142132017_Initial.cs" />
+    <Compile Include="Migrations\201701142132017_Initial.Designer.cs">
+      <DependentUpon>201701142132017_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Docs\Old\Backup pregenerated data\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Old\ManageController.cs" />
+    <Compile Include="Docs\Old\Backup pregenerated data\ManageController.cs" />
     <Compile Include="Errors\ErrorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701080516020_Initial.cs" />
-    <Compile Include="Migrations\201701080516020_Initial.Designer.cs">
-      <DependentUpon>201701080516020_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorizationFilter.cs" />
-    <Compile Include="Models\Old\AccountViewModels.cs" />
+    <Compile Include="Docs\Old\Backup pregenerated data\AccountViewModels.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FileContent.cs" />
     <Compile Include="Models\Folder.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Old\ManageViewModels.cs" />
+    <Compile Include="Docs\Old\Backup pregenerated data\ManageViewModels.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -281,6 +290,7 @@
     <Content Include="App_Data\aspnet-OnlineFileSystem-20161218032029_log.ldf">
       <DependentUpon>aspnet-OnlineFileSystem-20161218032029.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\XmlDocument.xml" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Command To Run.txt" />
     <Content Include="Content\bootstrap.css" />
@@ -290,51 +300,53 @@
     <Content Include="Content\Images\DownloadIcon.png" />
     <Content Include="Content\Images\FileIcon.png" />
     <Content Include="Content\Images\FolderIcon.png" />
+    <Content Include="Content\Images\panda icon.ico" />
     <Content Include="Content\Images\ShareIcon.png" />
     <Content Include="Content\Images\ShareIconCancel.png" />
+    <Content Include="Errors\Error.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Old\1st phase\css.css" />
-    <Content Include="Old\1st phase\docs\sitemap\sitemap.png" />
-    <Content Include="Old\1st phase\docs\sitemap\sitemap.txt" />
-    <Content Include="Old\1st phase\docs\validation.png" />
-    <Content Include="Old\1st phase\docs\wireframes and use cases\use case detailed.png" />
-    <Content Include="Old\1st phase\docs\wireframes and use cases\use case.png" />
-    <Content Include="Old\1st phase\docs\wireframes and use cases\wireframe.png" />
-    <Content Include="Old\1st phase\footer.html" />
-    <Content Include="Old\1st phase\frontPage.html" />
-    <Content Include="Old\1st phase\index.html" />
-    <Content Include="Old\1st phase\js.js" />
-    <Content Include="Old\1st phase\profilePage.html" />
-    <Content Include="Old\1st phase\python server\SimpleExampleServer.py" />
-    <Content Include="Old\1st phase\python server\SimpleHTTPSServer.py" />
-    <Content Include="Old\1st phase\python server\SimpleWebSocketServer.py" />
-    <Content Include="Old\1st phase\python server\ws-demo.py" />
-    <Content Include="Old\1st phase\python server\__init__.py" />
-    <Content Include="Old\1st phase\Resources\37818469-cute-panda-pictures.jpg" />
-    <Content Include="Old\1st phase\Resources\avatar.png" />
-    <Content Include="Old\1st phase\Resources\avatar_old.png" />
-    <Content Include="Old\1st phase\Resources\cute panda pictures.png" />
-    <Content Include="Old\1st phase\Resources\exit.png" />
-    <Content Include="Old\1st phase\Resources\info.svg" />
-    <Content Include="Old\1st phase\Resources\logo.jpg" />
-    <Content Include="Old\1st phase\Resources\oh_panda_tmb1.gif" />
-    <Content Include="Old\1st phase\Resources\record.jpg" />
-    <Content Include="Old\1st phase\topNavPage.html" />
-    <Content Include="Old\1st phase\websocket.js" />
+    <Content Include="Docs\Old\1st phase\css.css" />
+    <Content Include="Docs\Old\1st phase\docs\sitemap\sitemap.png" />
+    <Content Include="Docs\Old\1st phase\docs\sitemap\sitemap.txt" />
+    <Content Include="Docs\Old\1st phase\docs\validation.png" />
+    <Content Include="Docs\Old\1st phase\docs\wireframes and use cases\use case detailed.png" />
+    <Content Include="Docs\Old\1st phase\docs\wireframes and use cases\use case.png" />
+    <Content Include="Docs\Old\1st phase\docs\wireframes and use cases\wireframe.png" />
+    <Content Include="Docs\Old\1st phase\footer.html" />
+    <Content Include="Docs\Old\1st phase\frontPage.html" />
+    <Content Include="Docs\Old\1st phase\index.html" />
+    <Content Include="Docs\Old\1st phase\js.js" />
+    <Content Include="Docs\Old\1st phase\profilePage.html" />
+    <Content Include="Docs\Old\1st phase\python server\SimpleExampleServer.py" />
+    <Content Include="Docs\Old\1st phase\python server\SimpleHTTPSServer.py" />
+    <Content Include="Docs\Old\1st phase\python server\SimpleWebSocketServer.py" />
+    <Content Include="Docs\Old\1st phase\python server\ws-demo.py" />
+    <Content Include="Docs\Old\1st phase\python server\__init__.py" />
+    <Content Include="Docs\Old\1st phase\Resources\37818469-cute-panda-pictures.jpg" />
+    <Content Include="Docs\Old\1st phase\Resources\avatar.png" />
+    <Content Include="Docs\Old\1st phase\Resources\avatar_old.png" />
+    <Content Include="Docs\Old\1st phase\Resources\cute panda pictures.png" />
+    <Content Include="Docs\Old\1st phase\Resources\exit.png" />
+    <Content Include="Docs\Old\1st phase\Resources\info.svg" />
+    <Content Include="Docs\Old\1st phase\Resources\logo.jpg" />
+    <Content Include="Docs\Old\1st phase\Resources\oh_panda_tmb1.gif" />
+    <Content Include="Docs\Old\1st phase\Resources\record.jpg" />
+    <Content Include="Docs\Old\1st phase\topNavPage.html" />
+    <Content Include="Docs\Old\1st phase\websocket.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Old\1st phase\docs\README.md" />
-    <Content Include="Old\1st phase\docs\sitemap\sitemap.pdf" />
-    <Content Include="Old\1st phase\docs\wireframes and use cases\use case and wireframe.pdf" />
-    <Content Include="Old\1st phase\python server\run command.cmd" />
-    <Content Include="Old\1st phase\python server\__pycache__\SimpleWebSocketServer.cpython-35.pyc" />
-    <Content Include="Old\1st phase\README.md" />
+    <Content Include="Docs\Old\1st phase\docs\README.md" />
+    <Content Include="Docs\Old\1st phase\docs\sitemap\sitemap.pdf" />
+    <Content Include="Docs\Old\1st phase\docs\wireframes and use cases\use case and wireframe.pdf" />
+    <Content Include="Docs\Old\1st phase\python server\run command.cmd" />
+    <Content Include="Docs\Old\1st phase\python server\__pycache__\SimpleWebSocketServer.cpython-35.pyc" />
+    <Content Include="Docs\Old\1st phase\README.md" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
@@ -380,28 +392,28 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Old\About.cshtml" />
-    <Content Include="Views\Old\Contact.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\About.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Old\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Old\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Old\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Old\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Old\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Old\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Old\Account\Login.cshtml" />
-    <Content Include="Views\Old\Account\Register.cshtml" />
-    <Content Include="Views\Old\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Old\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Old\Account\SendCode.cshtml" />
-    <Content Include="Views\Old\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Old\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Old\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Old\Manage\Index.cshtml" />
-    <Content Include="Views\Old\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Old\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Old\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\ConfirmEmail.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\ForgotPassword.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\Login.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\Register.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\ResetPassword.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\SendCode.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Account\VerifyCode.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Manage\ChangePassword.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Manage\Index.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Manage\ManageLogins.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Manage\SetPassword.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Docs\Old\Backup pregenerated data\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\Main\Index.cshtml" />
@@ -422,17 +434,19 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701080516020_Initial.resx">
-      <DependentUpon>201701080516020_Initial.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Logs\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Docs\" />
-    <Folder Include="Logs\" />
+    <EmbeddedResource Include="Migrations\201701142132017_Initial.resx">
+      <DependentUpon>201701142132017_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Content\Images\panda icon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -444,16 +458,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>41487</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:37830/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

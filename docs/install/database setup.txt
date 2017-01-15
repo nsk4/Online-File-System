@@ -1,0 +1,1 @@
+If database is set up from Visual studio run command "update-database" in NuGet Packet Manager Console.

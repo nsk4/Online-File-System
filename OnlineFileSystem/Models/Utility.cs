@@ -34,55 +34,67 @@ namespace OnlineFileSystem.Models
 
 		public static bool SendConfirmationEmail(string email, string confirmationUrl)
 		{
-			return true;
-			throw new Exception("Configure USERNAME and PASSWORD for EMAIL");
-			string username = "USERNAME";
-			string password = "PASSWORD";
-			
-			var smtp = new SmtpClient
+			//return true;
+			//throw new Exception("Configure USERNAME and PASSWORD for EMAIL");
+			string username = "travianus.team@gmail.com";
+			string password = "developer";
+			try
 			{
-				Host = "smtp.gmail.com",
-				Port = 587,
-				EnableSsl = true,
-				DeliveryMethod = SmtpDeliveryMethod.Network,
-				UseDefaultCredentials = false,
-				Credentials = new NetworkCredential(username, password)
-			};
-			using (var message = new MailMessage("OnlineFileServer@TEST.com", email)
-			{
-				Subject = "Confirmation code for your registered account",
-				Body = "We are sending you the confirmation URL: " + confirmationUrl
-			})
-			{
-				smtp.Send(message);
+				using (MailMessage mm = new MailMessage(new MailAddress(username), new MailAddress(email)))
+				{
+					mm.Subject = "Confirmation code for your registered account";
+					mm.Body = "We are sending you the confirmation URL: " + confirmationUrl;
+
+					mm.IsBodyHtml = false;
+					SmtpClient smtp = new SmtpClient();
+					smtp.Host = "smtp.gmail.com";
+					smtp.EnableSsl = true;
+					smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+					NetworkCredential NetworkCred = new NetworkCredential(username, password);
+					smtp.UseDefaultCredentials = false;
+					smtp.Credentials = NetworkCred;
+					smtp.Port = 587;
+					smtp.Send(mm);
+				}
 			}
+			catch (Exception e)
+			{
+				return false;
+			}
+
 			return true;
 		}
 
 		public static bool SendPasswordResetEmail(string email, string newPassword)
 		{
-			return true;
-			throw new Exception("Configure USERNAME and PASSWORD for EMAIL");
-			string username = "USERNAME";
-			string password = "PASSWORD";
+			//return true;
+			//throw new Exception("Configure USERNAME and PASSWORD for EMAIL");
+			string username = "travianus.team@gmail.com";
+			string password = "developer";
+			try
+			{
+				using (MailMessage mm = new MailMessage(new MailAddress(username), new MailAddress(email)))
+				{
+					mm.Subject = "Password recovery";
+					mm.Body = "We are sending you the new password: " + newPassword;
 
-			var smtp = new SmtpClient
-			{
-				Host = "smtp.gmail.com",
-				Port = 587,
-				EnableSsl = true,
-				DeliveryMethod = SmtpDeliveryMethod.Network,
-				UseDefaultCredentials = false,
-				Credentials = new NetworkCredential(username, password)
-			};
-			using (var message = new MailMessage("OnlineFileServer@TEST.com", email)
-			{
-				Subject = "Password recovery",
-				Body = "We are sending you the new password: " + newPassword
-			})
-			{
-				smtp.Send(message);
+					mm.IsBodyHtml = false;
+					SmtpClient smtp = new SmtpClient();
+					smtp.Host = "smtp.gmail.com";
+					smtp.EnableSsl = true;
+					smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+					NetworkCredential NetworkCred = new NetworkCredential(username, password);
+					smtp.UseDefaultCredentials = false;
+					smtp.Credentials = NetworkCred;
+					smtp.Port = 587;
+					smtp.Send(mm);
+				}
 			}
+			catch (Exception)
+			{
+				return false;
+			}
+
 			return true;
 		}
 
@@ -142,6 +154,7 @@ namespace OnlineFileSystem.Models
 			Error400,
 			Error403,
 			Error404,
+			Error40413,
 			Error500
 		}
 

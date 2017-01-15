@@ -68,7 +68,7 @@ namespace OnlineFileSystem.Controllers
 	    {
 			UserAccount ua = db.UserAccounts.Find(((UserAccount)Session["user"]).UserAccountId);
 			UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
-			string url = u.Action("ConfirmEmail", "AccountOptions", new { userId = ua.UserAccountId, confirmationLink = ua.Confirmationlink });
+			string url = u.Action("ConfirmEmail", "AccountOptions", new { confirmationLink = ua.Confirmationlink });
 		    url = Request.Url.GetLeftPart(UriPartial.Authority) + url;
 		    if (!Utility.SendConfirmationEmail(ua.Email, url))
 		    {
@@ -102,11 +102,13 @@ namespace OnlineFileSystem.Controllers
 				else return RedirectToAction("Index", "AccountOptions");
 			}
 
+			
 		    ua.Role = (int)Utility.AccountType.User;
 			ua.DateModified = DateTime.Now;
 			db.SaveChanges();
-			
-			return RedirectToAction("Index", "AccountOptions");
+
+			if (Session["user"] != null) return RedirectToAction("Logout", "Front");
+			return RedirectToAction("Index", "Home");
 		}
 
 	}

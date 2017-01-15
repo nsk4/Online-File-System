@@ -93,6 +93,13 @@ namespace OnlineFileSystem.Controllers
 			newUser.DateCreated = DateTime.Now;
 			newUser.DateModified = DateTime.Now;
 			newUser.LastLogin = DateTime.Now;
+			UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
+			if (!Utility.SendConfirmationEmail(newUser.Email, u.Action("ConfirmEmail", "AccountOptions", new { confirmationLink = newUser.Confirmationlink })))
+			{
+				TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.ErrorInSendingEmail);
+				logger.Warn("Error in sending email confirmation to user " + newUser.Username);
+				return RedirectToAction("Index", "AccountOptions");
+			}
 
 			db.UserAccounts.Add(newUser);
 			db.SaveChanges();

@@ -31,6 +31,11 @@ namespace OnlineFileSystem.Errors
 			TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.Error404);
 			return RedirectToAction("Index", "Home");
 		}
+		public ActionResult Error40413()
+		{
+			TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.Error40413);
+			return RedirectToAction("Index", "Home");
+		}
 		public ActionResult Error500()
 		{
 			TempData["Error"] = Utility.GetErrorMessage(Utility.ErrorType.Error500);

@@ -1,0 +1,14 @@
+In Utility controller you need to enter your email credentials for email system to work!
+
+If server is ran on local machine open the project in visual studio and build it.
+Execute commands written in "database setup" to set up a database and fill it with initial values.
+
+For publishing to Azure, open project in Visual Studio then click publish on the project. Follow wizard and fill in your Azure account data, resource group, etc.
+
+
+Requirements:
+IIS server
+MSSql
+Visual Studio 2015 or newer
+.NET Framework 4.5.2
+C# 6
