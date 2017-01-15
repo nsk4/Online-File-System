@@ -100,11 +100,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AccountOptionsControllerTest.cs" />
-    <Compile Include="Controllers\MainControllerTest.cs" />
-    <Compile Include="Controllers\FrontControllerTest.cs" />
+    <Compile Include="Models\UtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
